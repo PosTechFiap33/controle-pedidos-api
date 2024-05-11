@@ -1,0 +1,32 @@
+version: '3.4'
+
+networks:
+    controlepedido-network:
+        driver: bridge 
+
+services:
+  controlepedido.database:
+    image: postgres:12
+    container_name: controlepedido.Database
+    environment:
+      POSTGRES_PASSWORD: "sghDb347#"
+      PGDATA: /data/postgres
+    volumes:
+     - ./docker-conf/postgres/:/data/postgres
+    ports:
+        - "5432:5432"
+    networks:
+        - controlepedido-network
+
+  controlepedido.api:
+    image: ${DOCKER_REGISTRY-}controlepedido
+    build:
+      context: .
+      dockerfile: ControlePedido.Api/Dockerfile
+    depends_on:
+        - controlepedido.database
+    networks:
+        - controlepedido-network
+    environment:
+        - DbConnection=Host=sgh.database;Port=5432;Pooling=true;Database=sgh;User Id=postgres;Password=sghDb347#;
+
