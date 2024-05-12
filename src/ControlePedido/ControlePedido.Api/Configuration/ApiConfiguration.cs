@@ -1,4 +1,6 @@
-﻿using ControlePedido.Infra.Configuration;
+﻿using ControlePedido.Infra;
+using ControlePedido.Infra.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControlePedido.Api.Configuration
 {
@@ -7,6 +9,9 @@ namespace ControlePedido.Api.Configuration
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabaseConfiguration(configuration);
+
+            var connectionString = configuration["DbConnection"];
+            services.AddDbContext<ControlePedidoContext>(options => options.UseNpgsql(connectionString));
 
             services.AddControllers();
 

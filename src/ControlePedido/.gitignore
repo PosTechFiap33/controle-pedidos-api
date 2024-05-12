@@ -11,6 +11,9 @@ autom4te.cache/
 tarballs/
 test-results/
 docker-conf/
+obj/
+.vs/
+bin/
 # Mac bundle stuff
 *.dmg
 *.app

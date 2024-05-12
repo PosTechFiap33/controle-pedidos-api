@@ -7,12 +7,12 @@ networks:
 services:
   controlepedido.database:
     image: postgres:12
-    container_name: controlepedido.Database
+    container_name: controlepedido.database
     environment:
-      POSTGRES_PASSWORD: "sghDb347#"
-      PGDATA: /data/postgres
+      POSTGRES_PASSWORD: "sgpDb347#"
+      PGDATA: /data/postgres/sgp
     volumes:
-     - ./docker-conf/postgres/:/data/postgres
+     - ./docker-conf/postgres/:/data/postgres/sgp
     ports:
         - "5432:5432"
     networks:
@@ -23,10 +23,10 @@ services:
     build:
       context: .
       dockerfile: ControlePedido.Api/Dockerfile
-    depends_on:
-        - controlepedido.database
     networks:
         - controlepedido-network
     environment:
-        - DbConnection=Host=sgh.database;Port=5432;Pooling=true;Database=sgh;User Id=postgres;Password=sghDb347#;
+        - DbConnection=Host=controlepedido.database;Port=5432;Pooling=true;Database=SGP;User Id=postgres;Password=sgpDb347#;
+   # depends_on: # no vs para mac trava o debug por algum motivo deixar desativado por enquanto
+   #   - controlepedido.database
 

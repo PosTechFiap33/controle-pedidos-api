@@ -13,5 +13,11 @@ namespace ControlePedido.Infra.Configuration
        
             return services;
         }
+
+        public static void ConfigureMigrationDatabase(this IServiceProvider services)
+        {
+            var dbContext = services.GetRequiredService<ControlePedidoContext>();
+            dbContext.Database.Migrate();
+        }
     }
 }
