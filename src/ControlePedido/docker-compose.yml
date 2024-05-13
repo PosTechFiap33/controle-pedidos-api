@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: "sgpDb347#"
       PGDATA: /data/postgres/sgp
     volumes:
-     - ./docker-conf/postgres/:/data/postgres/sgp
+     - ./docker-conf/postgres/:/data/postgres
     ports:
         - "5432:5432"
     networks:
@@ -22,7 +22,7 @@ services:
     image: ${DOCKER_REGISTRY-}controlepedido
     build:
       context: .
-      dockerfile: ControlePedido.Api/Dockerfile
+      dockerfile: Adapter/Driver/ControlePedido.Api/Dockerfile
     networks:
         - controlepedido-network
     environment:

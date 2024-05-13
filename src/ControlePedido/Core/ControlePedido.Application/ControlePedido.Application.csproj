@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UseCases\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UseCases/Clientes/" />
+    <Folder Include="UseCases\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControlePedido.Domain\ControlePedido.Domain.csproj" />
+  </ItemGroup>
+</Project>
