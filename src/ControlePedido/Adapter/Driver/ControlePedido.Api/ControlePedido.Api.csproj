@@ -17,9 +17,11 @@
 
   <ItemGroup>
     <None Remove="Configuration\" />
+    <None Remove="Middleware\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ControlePedido.Application\ControlePedido.Application.csproj">

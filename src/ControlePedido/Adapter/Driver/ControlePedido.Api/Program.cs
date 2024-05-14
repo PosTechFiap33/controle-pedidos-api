@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using ControlePedido.Api.Configuration;
+using ControlePedido.Api.Middleware;
 using ControlePedido.Domain.Base;
 using ControlePedido.Infra.Configuration;
 using Microsoft.AspNetCore.Diagnostics;
@@ -23,26 +24,7 @@ if (app.Environment.IsDevelopment())
     services.ConfigureMigrationDatabase();
 }
 
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
-    {
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        context.Response.ContentType = "text/plain";
-
-        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-        if (exceptionHandlerPathFeature != null)
-        {
-            var exceptionType = exceptionHandlerPathFeature.Error.GetType();
-
-            if (exceptionType == typeof(DomainException))
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-            Console.WriteLine($"Erro: {exceptionHandlerPathFeature.Error}");
-            await context.Response.WriteAsync($"Ocorreu um erro: {exceptionHandlerPathFeature.Error.Message}").ConfigureAwait(false);
-        }
-    });
-});
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
