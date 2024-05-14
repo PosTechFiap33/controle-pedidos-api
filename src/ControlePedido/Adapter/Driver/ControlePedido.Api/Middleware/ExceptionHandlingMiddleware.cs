@@ -32,18 +32,18 @@ namespace ControlePedido.Api.Middleware
             }
             catch (DomainException ex)
             {
-                await HandleExceptionAsync(context, ex);
+                await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                await context.Response.WriteAsync(ex.Message);
+                await HandleExceptionAsync(context, ex);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception, HttpStatusCode status = HttpStatusCode.InternalServerError)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Response.StatusCode = (int)status;
 
             var errorDetails = new ErrorDetails
             {
@@ -53,6 +53,7 @@ namespace ControlePedido.Api.Middleware
 
             return context.Response.WriteAsync(errorDetails.ToString());
         }
+
     }
 }
 
