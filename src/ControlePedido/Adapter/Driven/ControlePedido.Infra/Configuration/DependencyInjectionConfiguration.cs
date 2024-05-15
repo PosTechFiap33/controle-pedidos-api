@@ -11,6 +11,7 @@ namespace ControlePedido.Infra.Configuration
         {
             services.AddScoped<ControlePedidoContext>();
             services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IProdutoRepository, ProdutoRepository>();
 
             return services;
         }

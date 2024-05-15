@@ -11,8 +11,6 @@
     <None Remove="Base\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Adapters/" />
-    <Folder Include="Adapters/Repositories/" />
     <Folder Include="Entities\" />
     <Folder Include="ValueObjects\" />
     <Folder Include="Base\" />

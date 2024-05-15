@@ -1,4 +1,6 @@
-﻿using ControlePedido.Application.UseCases.Clientes;
+﻿using ControlePedido.Application;
+using ControlePedido.Application.UseCases.Clientes;
+using ControlePedido.Application.UseCases.Produtos;
 
 namespace ControlePedido.Api.Configuration
 {
@@ -7,6 +9,8 @@ namespace ControlePedido.Api.Configuration
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<ICriarClienteUseCase, CriarClienteUseCase>();
+            services.AddTransient<ICriarProdutoUseCase, CriarProdutoUseCase>();
+            services.AddTransient<IListarProdutoPorCategoriaUseCase, ListarProdutoPorCategoriaUseCase>();
         }
     }
 }

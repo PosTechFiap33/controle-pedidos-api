@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ControlePedido.Domain.Base
 {
@@ -24,6 +25,14 @@ namespace ControlePedido.Domain.Base
         {
             int length = stringValue.Trim().Length;
             if (length > maximum)
+            {
+                throw new DomainException(message);
+            }
+        }
+
+        public static void AssertGratherThanValue(decimal value, int minimum, string message)
+        {
+            if (value <= minimum)
             {
                 throw new DomainException(message);
             }

@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="Mappings\" />
     <Folder Include="Configuration\" />
-    <Folder Include="Repositories/" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
