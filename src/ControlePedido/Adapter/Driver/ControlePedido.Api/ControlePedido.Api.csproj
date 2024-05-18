@@ -19,10 +19,12 @@
   <ItemGroup>
     <None Remove="Configuration\" />
     <None Remove="Middleware\" />
+    <None Remove="Base\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="Middleware\" />
+    <Folder Include="Base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ControlePedido.Application\ControlePedido.Application.csproj">
@@ -31,5 +33,11 @@
     <ProjectReference Include="..\..\Driven\ControlePedido.Infra\ControlePedido.Infra.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\ControlePedido.Payment\ControlePedido.Payment.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 </Project>

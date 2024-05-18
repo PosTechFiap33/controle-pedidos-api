@@ -26,6 +26,11 @@ public class ProdutoRepository : IProdutoRepository
         return _context.Produto.AsNoTracking().Where(x => x.Categoria == categoria).ToListAsync();
     }
 
+    public Task<Produto?> ConsultarPorId(Guid produtoId)
+    {
+        return _context.Produto.AsNoTracking().FirstOrDefaultAsync(p => p.Id == produtoId);
+    }
+
     public void Dispose()
     {
         _context.Dispose();

@@ -1,5 +1,4 @@
 ﻿using System;
-using ControlePedido.Domain.Base;
 
 namespace ControlePedido.Domain.Entities
 {

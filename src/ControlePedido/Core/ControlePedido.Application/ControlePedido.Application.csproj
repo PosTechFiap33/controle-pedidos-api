@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <None Remove="UseCases\" />
+    <None Remove="UseCases\Pedidos\" />
+    <None Remove="DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UseCases/Clientes/" />
     <Folder Include="UseCases\" />
+    <Folder Include="UseCases\Pedidos\" />
+    <Folder Include="DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlePedido.Domain\ControlePedido.Domain.csproj" />

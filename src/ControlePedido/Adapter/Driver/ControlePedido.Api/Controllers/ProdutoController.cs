@@ -1,4 +1,5 @@
-﻿using ControlePedido.Application.UseCases.Produtos;
+﻿using ControlePedido.Api.Base;
+using ControlePedido.Application.UseCases.Produtos;
 using ControlePedido.Domain.Entities;
 using ControlePedido.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -6,20 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControlePedido.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class ProdutoController : ControllerBase
+[Route("api/[controller]")]
+public class ProdutoController : MainController
 {
     [HttpPost(Name = "PostProduto")]
     public async Task<ActionResult<Produto>> Post([FromServices] ICriarProdutoUseCase useCase, [FromBody] CriarProdutoDto produto)
     {
         var result = await useCase.Executar(produto);
-        return Ok(result);
+        return CustomResponse(result);
     }
 
     [HttpGet(Name = "GetProdutoPorCategoria")]
     public async Task<ActionResult<List<Produto>>> GetPorCategoria([FromServices] IListarProdutoPorCategoriaUseCase useCase, [FromQuery] Categoria categoria){
         var result = await useCase.Executar(categoria);
-        return Ok(result);
+        return CustomResponse(result);
     }
 
 }

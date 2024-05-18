@@ -7,4 +7,3 @@ namespace ControlePedido.Domain.Base
 		IUnitOfWork UnitOfWork { get; }
 	}
 }
-

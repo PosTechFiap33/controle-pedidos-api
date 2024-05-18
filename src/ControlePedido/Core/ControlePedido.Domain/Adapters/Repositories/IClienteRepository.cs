@@ -8,8 +8,9 @@ namespace ControlePedido.Domain.Adapters.Repositories
     public interface IClienteRepository : IRepository<Cliente>
 	{
 		Guid Criar(Cliente cliente);
-        Task<bool> consultarPorEmail(string email);
-        Task<bool> consultarPorCpf(string cpf);
+        Task<bool> ConsultarPorEmail(string email);
+        Task<bool> ConsultarPorCpf(string cpf);
+        Task<Cliente?> ConsultarPorId(Guid id);
     }
 }
 

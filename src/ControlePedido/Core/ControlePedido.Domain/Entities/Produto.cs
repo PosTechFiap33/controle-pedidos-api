@@ -1,4 +1,5 @@
-﻿using ControlePedido.Domain.Base;
+﻿using System.Collections.Generic;
+using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Enums;
 using ControlePedido.Domain.ValueObjects;
 
@@ -11,6 +12,7 @@ namespace ControlePedido.Domain.Entities
         public decimal Preco { get; private set; }
         public Categoria Categoria { get; private set; }
         public Imagem Imagem { get; private set; }
+        public virtual ICollection<PedidoItem> ItensPedido { get; private set; }
 
         protected Produto(){}
 

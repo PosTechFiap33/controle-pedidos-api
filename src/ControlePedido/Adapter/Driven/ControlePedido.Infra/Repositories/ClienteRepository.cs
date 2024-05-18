@@ -21,14 +21,19 @@ namespace ControlePedido.Infra.Repositories
             return cliente.Id;
         }
 
-        public Task<bool> consultarPorEmail(string email)
+        public Task<bool> ConsultarPorEmail(string email)
         {
             return _context.Cliente.AsNoTracking().AnyAsync(c => c.Email.Endereco == email);
         }
 
-        public Task<bool> consultarPorCpf(string cpf)
+        public Task<bool> ConsultarPorCpf(string cpf)
         {
             return _context.Cliente.AsNoTracking().AnyAsync(c => c.Cpf.Numero == cpf);
+        }
+
+        public Task<Cliente?> ConsultarPorId(Guid id)
+        {
+            return _context.Cliente.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Dispose()

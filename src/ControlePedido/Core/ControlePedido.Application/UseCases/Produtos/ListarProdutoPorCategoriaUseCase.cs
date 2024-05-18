@@ -21,7 +21,7 @@ public class ListarProdutoPorCategoriaUseCase : IListarProdutoPorCategoriaUseCas
 
     public Task<List<Produto>> Executar(Categoria categoria)
     {
-        if (categoria == 0 || categoria == null)
+        if (categoria <= 0 || categoria == null)
             throw new DomainException("Categoria inválida!");
 
         return _repository.ListarPorCategoria(categoria);

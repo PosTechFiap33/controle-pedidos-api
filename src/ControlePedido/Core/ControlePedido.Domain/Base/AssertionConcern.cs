@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace ControlePedido.Domain.Base
 {
@@ -8,6 +7,14 @@ namespace ControlePedido.Domain.Base
         public static void AssertArgumentEquals(object object1, object object2, string message)
         {
             if (!object1.Equals(object2))
+            {
+                throw new DomainException(message);
+            }
+        }
+
+        public static void AssertArgumentNotEquals(object object1, object object2, string message)
+        {
+            if (object1.Equals(object2))
             {
                 throw new DomainException(message);
             }
@@ -69,14 +76,6 @@ namespace ControlePedido.Domain.Base
         public static void AssertArgumentNotEmpty(string stringValue, string message)
         {
             if (stringValue == null || stringValue.Trim().Length == 0)
-            {
-                throw new DomainException(message);
-            }
-        }
-
-        public static void AssertArgumentNotEquals(object object1, object object2, string message)
-        {
-            if (object1.Equals(object2))
             {
                 throw new DomainException(message);
             }

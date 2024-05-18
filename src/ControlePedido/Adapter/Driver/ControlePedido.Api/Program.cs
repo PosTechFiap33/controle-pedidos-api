@@ -1,7 +1,6 @@
 ﻿using ControlePedido.Api.Configuration;
 using ControlePedido.Api.Middleware;
 using ControlePedido.Infra.Configuration;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +12,6 @@ builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerApp();

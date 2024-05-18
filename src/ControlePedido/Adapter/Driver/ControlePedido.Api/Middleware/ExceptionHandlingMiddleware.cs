@@ -1,19 +1,12 @@
 ﻿using System.Net;
 using System.Text.Json;
+using ControlePedido.Api.Base;
 using ControlePedido.Domain.Base;
+using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ControlePedido.Api.Middleware
 {
-    public class ErrorDetails
-    {
-        public int StatusCode { get; set; }
-        public string Message { get; set; }
-
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this);
-        }
-    }
 
     public class ExceptionHandlingMiddleware
     {
@@ -45,13 +38,13 @@ namespace ControlePedido.Api.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
 
-            var errorDetails = new ErrorDetails
-            {
-                StatusCode = context.Response.StatusCode,
-                Message = exception.Message
-            };
+            var errorDetails = new ValidationProblemDetails(new Dictionary<string, string[]> {
+                {
+                    "Mensagens", new string[]{exception.Message}
+                }
+            });
 
-            return context.Response.WriteAsync(errorDetails.ToString());
+            return context.Response.WriteAsync(JsonSerializer.Serialize(errorDetails));
         }
 
     }

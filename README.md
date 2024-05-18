@@ -3,7 +3,7 @@ Repositório criado para conter as atividades (Tech Challenge) da Pós Tech em A
 
 ### Gerando migrations
 
-Navegue até a pasta src/ControlePedido e execute o comando `dotnet ef migrations add {NomeDaMigration} --project Adaper/Driven/ControlePedido.Infra -s Adapter/Driver/ControlePedido.Api -c ControlePedidoContext --verbose`
+Navegue até a pasta src/ControlePedido e execute o comando `dotnet ef migrations add {NomeDaMigration} --project Adapter/Driven/ControlePedido.Infra -s Adapter/Driver/ControlePedido.Api -c ControlePedidoContext --verbose`
 
 ## Documentação
 

@@ -10,7 +10,7 @@ namespace ControlePedido.Infra.Configuration
         {
             var connectionString = configuration["DbConnection"];
             services.AddDbContext<ControlePedidoContext>(options => options.UseNpgsql(connectionString));
-            services.RegisterService();
+            services.RegisterRepositories();
 
 
             return services;

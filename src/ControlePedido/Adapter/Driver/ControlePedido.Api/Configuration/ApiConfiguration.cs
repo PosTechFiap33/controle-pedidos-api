@@ -1,4 +1,7 @@
-﻿using ControlePedido.Infra.Configuration;
+﻿using ControlePedido.Api.Middleware;
+using ControlePedido.Infra.Configuration;
+using ControlePedido.Payment.Configuration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ControlePedido.Api.Configuration
 {
@@ -6,11 +9,21 @@ namespace ControlePedido.Api.Configuration
     {
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<CustomModelStateValidationFilter>();
+            });
+
             services.AddDatabaseConfiguration(configuration);
 
-            services.RegisterServices();
+            services.RegisterPaymentServices();
 
-            services.AddControllers();
+            services.RegisterServices();
 
             services.AddEndpointsApiExplorer();
 

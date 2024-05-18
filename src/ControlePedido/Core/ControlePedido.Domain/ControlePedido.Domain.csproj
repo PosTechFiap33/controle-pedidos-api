@@ -9,10 +9,12 @@
     <None Remove="Entities\" />
     <None Remove="ValueObjects\" />
     <None Remove="Base\" />
+    <None Remove="Adapters\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="ValueObjects\" />
     <Folder Include="Base\" />
+    <Folder Include="Adapters\Services\" />
   </ItemGroup>
 </Project>
