@@ -17,14 +17,11 @@ namespace ControlePedido.Domain.Entities
 
         public PedidoItem(Produto produto)
         {
-            ProdutoId = produto.Id;
             Produto = produto;
-            ValidateEntity();
-        }
+            AssertionConcern.AssertArgumentNotNull(Produto, "O Produto deve ser informado ao criar um item de pedido!");
 
-        private void ValidateEntity()
-        {
-           AssertionConcern.AssertArgumentNotEquals(Guid.Empty, ProdutoId, "Codigo do produto não foi informado!");
+            ProdutoId = produto.Id;
+            AssertionConcern.AssertArgumentNotEquals(Guid.Empty, ProdutoId, "Codigo do produto não foi informado!");
         }
     }
 
@@ -94,6 +91,7 @@ namespace ControlePedido.Domain.Entities
         private void ValidateEntity()
         {
             AssertionConcern.AssertArgumentNotEquals(Itens.Any(), false, "O Pedido deve conter pelo nenos 1 item!");
+            AssertionConcern.AssertGratherThanValue(Valor, 0, "O valor do pedido deve ser maior que 0!");
         }
     }
 }
