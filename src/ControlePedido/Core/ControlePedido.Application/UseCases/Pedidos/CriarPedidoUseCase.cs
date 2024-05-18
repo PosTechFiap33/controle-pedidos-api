@@ -33,16 +33,18 @@ namespace ControlePedido.Application.UseCases.Pedidos
         {
             Pedido pedido;
 
+            var itensPedido = new List<PedidoItem>();
+
             var clienteId = criarPedidoDTO.ClienteId;
 
-            var itensPedido = criarPedidoDTO.Itens.Select(p => new PedidoItem(p.ProdutoId)).ToList();
-
-            foreach(var itens in itensPedido)
+            foreach(var itens in criarPedidoDTO.Itens)
             {
                 var produto = await _produtoRepository.ConsultarPorId(itens.ProdutoId);
 
                 if (produto is null)
                     throw new DomainException($"Não foi encontrado um pedido com id {itens.ProdutoId}");
+
+                itensPedido.Add(new PedidoItem(produto));
             };
 
             if (!clienteId.HasValue || clienteId == Guid.Empty)

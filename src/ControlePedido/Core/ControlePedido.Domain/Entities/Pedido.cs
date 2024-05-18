@@ -13,9 +13,12 @@ namespace ControlePedido.Domain.Entities
         public virtual Pedido Pedido { get; set; }
         public virtual Produto Produto { get; set; }
 
-        public PedidoItem(Guid produtoId)
+        protected PedidoItem() { }
+
+        public PedidoItem(Produto produto)
         {
-            ProdutoId = produtoId;
+            ProdutoId = produto.Id;
+            Produto = produto;
             ValidateEntity();
         }
 
@@ -40,6 +43,7 @@ namespace ControlePedido.Domain.Entities
 
     public class Pedido : Entity, IAggregateRoot
     {
+        public decimal Valor { get; private set; }
         public Guid ClienteId { get; private set; }
         public StatusPedido Status { get; private set; }
         public DateTime DataHoraCriacao { get; private set; }
@@ -55,6 +59,7 @@ namespace ControlePedido.Domain.Entities
         {
             Itens = itens;
             DataHoraCriacao = DateTime.UtcNow;
+            Valor = Itens.Sum(i => i.Produto.Preco);
             ValidateEntity();
         }
 

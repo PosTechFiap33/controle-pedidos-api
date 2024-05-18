@@ -46,6 +46,9 @@ public class PedidoMapping : IEntityTypeConfiguration<Pedido>
 
         builder.Property(p => p.Status);
 
+        builder.Property(p => p.Valor)
+               .IsRequired();
+
         builder.Property(p => p.DataHoraCriacao)
                .IsRequired();
 

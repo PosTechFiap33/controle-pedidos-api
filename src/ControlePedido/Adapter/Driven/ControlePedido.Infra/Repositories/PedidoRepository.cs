@@ -1,6 +1,7 @@
 ﻿using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControlePedido.Infra.Repositories
 {
@@ -16,7 +17,10 @@ namespace ControlePedido.Infra.Repositories
 
         public void Criar(Pedido pedido)
         {
-            _context.Pedido.Add(pedido);
+            _context.Entry(pedido).State = EntityState.Added;
+
+            foreach (var item in pedido.Itens)
+                _context.Entry(item).State = EntityState.Added;
         }
 
         public void Dispose()
