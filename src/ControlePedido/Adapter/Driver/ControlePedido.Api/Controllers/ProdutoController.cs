@@ -11,7 +11,7 @@ namespace ControlePedido.Api.Controllers;
 public class ProdutoController : MainController
 {
     [HttpPost(Name = "PostProduto")]
-    public async Task<ActionResult<Produto>> Post([FromServices] ICriarProdutoUseCase useCase, [FromBody] CriarProdutoDto produto)
+    public async Task<ActionResult<Produto>> Post([FromServices] ICriarProdutoUseCase useCase, [FromBody] CriarProdutoDTO produto)
     {
         var result = await useCase.Executar(produto);
         return CustomResponse(result);

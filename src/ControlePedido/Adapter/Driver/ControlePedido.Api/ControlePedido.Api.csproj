@@ -33,7 +33,7 @@
     <ProjectReference Include="..\..\Driven\ControlePedido.Infra\ControlePedido.Infra.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\ControlePedido.Payment\ControlePedido.Payment.csproj">
+    <ProjectReference Include="..\..\Driven\ControlePedido.Payment\ControlePedido.Payment.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

@@ -1,5 +1,4 @@
-﻿using System;
-using ControlePedido.Domain.Adapters.Services;
+﻿using ControlePedido.Domain.Adapters.Services;
 using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Payment.Services

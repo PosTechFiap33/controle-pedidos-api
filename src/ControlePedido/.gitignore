@@ -14,6 +14,9 @@ docker-conf/
 obj/
 .vs/
 bin/
+Adapter/Driven/ControlePedido.Payment/obj/
+Adapter/Driven/ControlePedido.Payment/bin/
+
 # Mac bundle stuff
 *.dmg
 *.app

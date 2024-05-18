@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.Domain", "Core\ControlePedido.Domain\ControlePedido.Domain.csproj", "{D5852AF7-E5EA-42DB-B982-4F0F43C20358}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.Payment", "..\ControlePedido.Payment\ControlePedido.Payment.csproj", "{7C5F1744-F634-43BD-8340-93714534E21C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.Payment", "Adapter\Driven\ControlePedido.Payment\ControlePedido.Payment.csproj", "{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,10 @@ Global
 		{D5852AF7-E5EA-42DB-B982-4F0F43C20358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5852AF7-E5EA-42DB-B982-4F0F43C20358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5852AF7-E5EA-42DB-B982-4F0F43C20358}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C5F1744-F634-43BD-8340-93714534E21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C5F1744-F634-43BD-8340-93714534E21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C5F1744-F634-43BD-8340-93714534E21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C5F1744-F634-43BD-8340-93714534E21C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +69,6 @@ Global
 		{5A30D5CE-41C9-4169-B3C6-99E2B29F96AF} = {FF28803F-B076-4142-A508-7E3D84F3F35B}
 		{0BA24906-40F5-4FFF-9216-D3D34F60959B} = {FCB0EEB5-125B-45C4-80BB-5E23345E0164}
 		{D5852AF7-E5EA-42DB-B982-4F0F43C20358} = {FCB0EEB5-125B-45C4-80BB-5E23345E0164}
-		{7C5F1744-F634-43BD-8340-93714534E21C} = {1ED6241C-C7DC-4ABD-9C10-5C2BCEDC806D}
+		{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC} = {1ED6241C-C7DC-4ABD-9C10-5C2BCEDC806D}
 	EndGlobalSection
 EndGlobal

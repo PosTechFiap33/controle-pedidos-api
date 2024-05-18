@@ -3,20 +3,21 @@ using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Adapters.Services;
 using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Entities;
+using static ControlePedido.Domain.Entities.Pedido;
 
 namespace ControlePedido.Application.UseCases.Pedidos
 {
-	public interface ICriarPedidoUseCase
-	{
-		Task<string> Executar(CriarPedidoDTO criarPedidoDTO);
-	}
+    public interface ICriarPedidoUseCase
+    {
+        Task<string> Executar(CriarPedidoDTO criarPedidoDTO);
+    }
 
     public class CriarPedidoUseCase : ICriarPedidoUseCase
-	{
-		private readonly IPedidoRepository _repository;
+    {
+        private readonly IPedidoRepository _repository;
         private readonly IClienteRepository _clienteRepository;
         private readonly IProdutoRepository _produtoRepository;
-		private readonly IPagamentoService _service;
+        private readonly IPagamentoService _service;
 
         public CriarPedidoUseCase(IPedidoRepository repository,
                                   IPagamentoService service,
@@ -31,13 +32,11 @@ namespace ControlePedido.Application.UseCases.Pedidos
 
         public async Task<string> Executar(CriarPedidoDTO criarPedidoDTO)
         {
-            Pedido pedido;
+            Cliente? cliente = await ConsultarCliente(criarPedidoDTO.ClienteId);
 
             var itensPedido = new List<PedidoItem>();
 
-            var clienteId = criarPedidoDTO.ClienteId;
-
-            foreach(var itens in criarPedidoDTO.Itens)
+            foreach (var itens in criarPedidoDTO.Itens)
             {
                 var produto = await _produtoRepository.ConsultarPorId(itens.ProdutoId);
 
@@ -47,23 +46,30 @@ namespace ControlePedido.Application.UseCases.Pedidos
                 itensPedido.Add(new PedidoItem(produto));
             };
 
-            if (!clienteId.HasValue || clienteId == Guid.Empty)
-                pedido = new Pedido(itensPedido);
-            else
-            {
-                var cliente = await _clienteRepository.ConsultarPorId(clienteId.Value);
+            var pedido = PedidoFactory.Criar(itensPedido, cliente);
 
-                if (cliente is null)
-                    throw new DomainException("Não foi localizado um cliente para o id informado!");
-
-                pedido = new Pedido(itensPedido, cliente.Id);
-            }
-
-            _repository.Criar(pedido);
-
-            await _repository.UnitOfWork.Commit();
+            await SalvarPedido(pedido);
 
             return _service.GerarQRCodePagamento(pedido);
+        }
+
+        private async Task<Cliente?> ConsultarCliente(Guid? clienteId)
+        {
+            if (!clienteId.HasValue)
+                return null;
+
+            var cliente = await _clienteRepository.ConsultarPorId(clienteId.Value);
+
+            if (cliente is null)
+                throw new DomainException("Não foi localizado um cliente para o id informado!");
+
+            return cliente;
+        }
+
+        private async Task SalvarPedido(Pedido pedido)
+        {
+            _repository.Criar(pedido);
+            await _repository.UnitOfWork.Commit();
         }
     }
 }

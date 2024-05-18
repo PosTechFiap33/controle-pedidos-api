@@ -25,7 +25,8 @@ namespace ControlePedido.Domain.Entities
         }
     }
 
-    public class PedidoPagamento : Entity{
+    public class PedidoPagamento : Entity
+    {
         public Guid PedidoId { get; private set; }
         public DateTime DataHoraPagamento { get; private set; }
         public string CodigoTransacao { get; private set; }
@@ -50,9 +51,9 @@ namespace ControlePedido.Domain.Entities
         public virtual PedidoPagamento Pagamento { get; private set; }
         public virtual Cliente Cliente { get; private set; }
 
-        protected Pedido() {}
+        protected Pedido() { }
 
-        public Pedido(ICollection<PedidoItem> itens)
+        private Pedido(ICollection<PedidoItem> itens)
         {
             Itens = itens;
             DataHoraCriacao = DateTime.UtcNow;
@@ -60,13 +61,14 @@ namespace ControlePedido.Domain.Entities
             ValidateEntity();
         }
 
-        public Pedido(ICollection<PedidoItem> itens, Guid clienteId) : this(itens)
+        private Pedido(ICollection<PedidoItem> itens, Guid clienteId) : this(itens)
         {
             ClienteId = clienteId;
             AssertionConcern.AssertArgumentNotEquals(Guid.Empty, ClienteId, "Codigo do cliente não foi informado!");
         }
 
-        public void Pagar(string codigoTransacao){
+        public void Pagar(string codigoTransacao)
+        {
             Status = StatusPedido.RECEBIDO;
             Pagamento = new PedidoPagamento(codigoTransacao);
         }
@@ -79,7 +81,7 @@ namespace ControlePedido.Domain.Entities
 
         public void FinalizarPreparo()
         {
-           Status = StatusPedido.PRONTO;
+            Status = StatusPedido.PRONTO;
         }
 
         public void Finalizar()
@@ -92,6 +94,14 @@ namespace ControlePedido.Domain.Entities
         {
             AssertionConcern.AssertArgumentNotEquals(Itens.Any(), false, "O Pedido deve conter pelo nenos 1 item!");
             AssertionConcern.AssertGratherThanValue(Valor, 0, "O valor do pedido deve ser maior que 0!");
+        }
+
+        public static class PedidoFactory
+        {
+            public static Pedido Criar(ICollection<PedidoItem> itens, Cliente? cliente = null)
+            {
+                return cliente is null ? new Pedido(itens) : new Pedido(itens, cliente.Id);
+            }
         }
     }
 }
