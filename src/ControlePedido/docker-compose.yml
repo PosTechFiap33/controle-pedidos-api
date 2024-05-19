@@ -23,6 +23,8 @@ services:
     build:
       context: .
       dockerfile: Adapter/Driver/ControlePedido.Api/Dockerfile
+    ports:
+        - "5001:443"
     networks:
         - controlepedido-network
     environment:

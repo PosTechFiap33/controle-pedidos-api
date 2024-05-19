@@ -1,6 +1,6 @@
 ﻿using ControlePedido.Application.DTOs;
+using ControlePedido.Domain.Adapters.Providers;
 using ControlePedido.Domain.Adapters.Repositories;
-using ControlePedido.Domain.Adapters.Services;
 using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Entities;
 using static ControlePedido.Domain.Entities.Pedido;
@@ -17,22 +17,22 @@ namespace ControlePedido.Application.UseCases.Pedidos
         private readonly IPedidoRepository _repository;
         private readonly IClienteRepository _clienteRepository;
         private readonly IProdutoRepository _produtoRepository;
-        private readonly IPagamentoService _service;
+        private readonly IPagamentoProvider _pagamentoProvider;
 
         public CriarPedidoUseCase(IPedidoRepository repository,
-                                  IPagamentoService service,
+                                  IPagamentoProvider pagamentoProvider,
                                   IProdutoRepository produtoRepository,
                                   IClienteRepository clienteRepository)
         {
             _repository = repository;
-            _service = service;
+            _pagamentoProvider = pagamentoProvider;
             _produtoRepository = produtoRepository;
             _clienteRepository = clienteRepository;
         }
 
         public async Task<string> Executar(CriarPedidoDTO criarPedidoDTO)
         {
-            Cliente? cliente = await ConsultarCliente(criarPedidoDTO.ClienteId);
+            Cliente? cliente = await ConsultarCliente(criarPedidoDTO.CpfCliente);
 
             var itensPedido = new List<PedidoItem>();
 
@@ -50,15 +50,15 @@ namespace ControlePedido.Application.UseCases.Pedidos
 
             await SalvarPedido(pedido);
 
-            return _service.GerarQRCodePagamento(pedido);
+            return _pagamentoProvider.GerarQRCodePagamento(pedido);
         }
 
-        private async Task<Cliente?> ConsultarCliente(Guid? clienteId)
+        private async Task<Cliente?> ConsultarCliente(string cpfCliente)
         {
-            if (!clienteId.HasValue)
+            if (string.IsNullOrEmpty(cpfCliente))
                 return null;
 
-            var cliente = await _clienteRepository.ConsultarPorId(clienteId.Value);
+            var cliente = await _clienteRepository.ConsultarPorCpf(cpfCliente);
 
             if (cliente is null)
                 throw new DomainException("Não foi localizado um cliente para o id informado!");

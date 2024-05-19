@@ -10,7 +10,7 @@ namespace ControlePedido.Application.DTOs
 
     public class CriarPedidoDTO
     {
-        public Guid? ClienteId { get; set; }
+        public string? CpfCliente { get; set; }
 
         [Required(ErrorMessage = "Campo {0} obrigatorio")]
         public ICollection<PedidoItemDTO> Itens { get; set; }

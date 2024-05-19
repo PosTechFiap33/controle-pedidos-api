@@ -1,4 +1,5 @@
-﻿using ControlePedido.Api.Middleware;
+﻿using System.Text.Json.Serialization;
+using ControlePedido.Api.Middleware;
 using ControlePedido.Infra.Configuration;
 using ControlePedido.Payment.Configuration;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +16,9 @@ namespace ControlePedido.Api.Configuration
             });
 
             services.AddControllers(options =>
-            {
-                options.Filters.Add<CustomModelStateValidationFilter>();
-            });
+                options.Filters.Add<CustomModelStateValidationFilter>()
+            ).AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddDatabaseConfiguration(configuration);
 

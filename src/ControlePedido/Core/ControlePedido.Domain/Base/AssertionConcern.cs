@@ -75,7 +75,7 @@ namespace ControlePedido.Domain.Base
 
         public static void AssertArgumentNotEmpty(string stringValue, string message)
         {
-            if (stringValue == null || stringValue.Trim().Length == 0)
+            if (stringValue == null || string.IsNullOrEmpty(stringValue))
             {
                 throw new DomainException(message);
             }

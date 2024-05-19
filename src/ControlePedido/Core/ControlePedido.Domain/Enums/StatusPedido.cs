@@ -4,18 +4,20 @@ namespace ControlePedido.Domain.Enums
 {
     public enum StatusPedido
 	{
+		[Description("Criado")]
+		CRIADO = 1,
 
 		[Description("Recebido")]
-		RECEBIDO = 1,
+		RECEBIDO = 2,
 
 		[Description("Em preparacao")]
-		EM_PREPARACAO = 2,
+		EM_PREPARACAO = 3,
 
         [Description("Pronto")]
-        PRONTO = 3,
+        PRONTO = 4,
 
         [Description("Finalizado")]
-		FINALIZADO = 4
+		FINALIZADO = 5
 
 	}
 }

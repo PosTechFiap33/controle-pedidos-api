@@ -5,6 +5,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+ENV TZ=America/Sao_Paulo
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["ControlePedido.Api/ControlePedido.Api.csproj", "ControlePedido.Api/"]

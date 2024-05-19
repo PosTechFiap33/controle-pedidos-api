@@ -17,6 +17,13 @@ namespace ControlePedido.Api.Controllers
             _logger = logger;
         }
 
+        [HttpGet(Name = "GetClientes")]
+        public async Task<ActionResult<ICollection<Cliente>>> Get([FromServices] IListarTodosClientesUseCase useCase)
+        {
+            var result = await useCase.Executar();
+            return CustomResponse(result);
+        }
+
         [HttpPost(Name = "PostCliente")]
         public async Task<ActionResult<Cliente>> Post([FromServices] ICriarClienteUseCase useCase, [FromBody] CriarClienteDTO cliente)
         {

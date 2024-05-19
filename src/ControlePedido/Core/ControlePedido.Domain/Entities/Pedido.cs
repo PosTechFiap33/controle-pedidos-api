@@ -34,8 +34,22 @@ namespace ControlePedido.Domain.Entities
 
         public PedidoPagamento(string codigoTransacao)
         {
-            DataHoraPagamento = DateTime.Now;
+            DataHoraPagamento = DateTime.UtcNow;
             CodigoTransacao = codigoTransacao;
+        }
+    }
+
+    public class PedidoStatus : Entity
+    {
+        public Guid PedidoId { get; private set; }
+        public StatusPedido Status { get; private set; }
+        public DateTime DataHora { get; private set; }
+        public virtual Pedido Pedido { get; private set; }
+
+        public PedidoStatus(StatusPedido status)
+        {
+            Status = status;
+            DataHora = DateTime.UtcNow;
         }
     }
 
@@ -43,11 +57,8 @@ namespace ControlePedido.Domain.Entities
     {
         public decimal Valor { get; private set; }
         public Guid ClienteId { get; private set; }
-        public StatusPedido Status { get; private set; }
-        public DateTime DataHoraCriacao { get; private set; }
-        public DateTime DataHoraInicio { get; private set; }
-        public DateTime DataHoraFim { get; private set; }
         public virtual ICollection<PedidoItem> Itens { get; private set; }
+        public virtual ICollection<PedidoStatus> Status { get; private set; }
         public virtual PedidoPagamento Pagamento { get; private set; }
         public virtual Cliente Cliente { get; private set; }
 
@@ -56,7 +67,9 @@ namespace ControlePedido.Domain.Entities
         private Pedido(ICollection<PedidoItem> itens)
         {
             Itens = itens;
-            DataHoraCriacao = DateTime.UtcNow;
+            Status = new List<PedidoStatus> {
+                new PedidoStatus(StatusPedido.CRIADO)
+            };
             Valor = Itens.Sum(i => i.Produto.Preco);
             ValidateEntity();
         }
@@ -69,31 +82,40 @@ namespace ControlePedido.Domain.Entities
 
         public void Pagar(string codigoTransacao)
         {
-            Status = StatusPedido.RECEBIDO;
-            Pagamento = new PedidoPagamento(codigoTransacao);
+            AssertionConcern.AssertArgumentNotEmpty(codigoTransacao, "O código da transação não pode ser vazio!");
+
+            if (Pagamento is null)
+            {
+                Status.Add(new PedidoStatus(StatusPedido.RECEBIDO));
+                Pagamento = new PedidoPagamento(codigoTransacao);
+            }
         }
 
         public void IniciarPreparo()
         {
-            Status = StatusPedido.EM_PREPARACAO;
-            DataHoraInicio = DateTime.UtcNow;
+            AtualizarStatus(StatusPedido.EM_PREPARACAO);
         }
 
         public void FinalizarPreparo()
         {
-            Status = StatusPedido.PRONTO;
+            AtualizarStatus(StatusPedido.PRONTO);
         }
 
         public void Finalizar()
         {
-            Status = StatusPedido.FINALIZADO;
-            DataHoraFim = DateTime.UtcNow;
+            AtualizarStatus(StatusPedido.FINALIZADO);
         }
 
         private void ValidateEntity()
         {
             AssertionConcern.AssertArgumentNotEquals(Itens.Any(), false, "O Pedido deve conter pelo nenos 1 item!");
             AssertionConcern.AssertGratherThanValue(Valor, 0, "O valor do pedido deve ser maior que 0!");
+        }
+
+        private void AtualizarStatus(StatusPedido status)
+        {
+            if (Status.Any(s => s.Status != status))
+                Status.Add(new PedidoStatus(status));
         }
 
         public static class PedidoFactory

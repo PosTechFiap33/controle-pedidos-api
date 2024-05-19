@@ -1,4 +1,5 @@
 ﻿using ControlePedido.Api.Base;
+using ControlePedido.Application.DTOs;
 using ControlePedido.Application.UseCases.Produtos;
 using ControlePedido.Domain.Entities;
 using ControlePedido.Domain.Enums;

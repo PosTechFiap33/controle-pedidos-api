@@ -22,12 +22,12 @@ namespace ControlePedido.Application.UseCases.Clientes
         {
             var cliente = new Cliente(nome, cpf, email);
 
-            var cpfExiste = await _repository.ConsultarPorCpf(cpf);
+            var cpfExiste = await _repository.ConsultarPorCpf(cpf) is not null;
 
             if (cpfExiste)
                 throw new DomainException("Cpf já cadastrado no sistema!");
 
-            var emailExiste = await _repository.ConsultarPorEmail(email);
+            var emailExiste = await _repository.ConsultarPorEmail(email) is not null;
 
             if (emailExiste)
                 throw new DomainException("E-mail já cadastrado no sistema!");
