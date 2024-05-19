@@ -28,6 +28,8 @@ namespace ControlePedido.Application.UseCases.Pedidos
         {
             var pedido = await _repository.ConsultarPorId(pagarPedido.PedidoId);
 
+            //TODO - colocar validacao pra verificar se pedido ja esta pago.
+
             if (pedido is null)
                 throw new DomainException("Não foi encontrado um pedido com o código informado!");
 

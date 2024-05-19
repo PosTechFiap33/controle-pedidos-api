@@ -86,8 +86,8 @@ namespace ControlePedido.Domain.Entities
 
             if (Pagamento is null)
             {
-                Status.Add(new PedidoStatus(StatusPedido.RECEBIDO));
                 Pagamento = new PedidoPagamento(codigoTransacao);
+                AtualizarStatus(StatusPedido.RECEBIDO);
             }
         }
 
@@ -114,6 +114,8 @@ namespace ControlePedido.Domain.Entities
 
         private void AtualizarStatus(StatusPedido status)
         {
+            AssertionConcern.AssertArgumentNotNull(Pagamento, "Para avançar com o pedido é necessário realizar o pagamento!");
+
             if (Status.Any(s => s.Status != status))
                 Status.Add(new PedidoStatus(status));
         }
