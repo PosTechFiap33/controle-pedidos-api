@@ -93,16 +93,25 @@ namespace ControlePedido.Domain.Entities
 
         public void IniciarPreparo()
         {
+            AssertionConcern.AssertArgumentTrue(ValidarPagamento(), "Não foi realizado o pagamento para o pedido informado!");
             AtualizarStatus(StatusPedido.EM_PREPARACAO);
         }
 
         public void FinalizarPreparo()
         {
+            var preparoPedidoIniciado = VerificarExisteStatus(StatusPedido.EM_PREPARACAO);
+
+            AssertionConcern.AssertArgumentTrue(preparoPedidoIniciado, "Não foi possível finalizar o preparo do pedido pois o preparo não foi iniciado!");
+
             AtualizarStatus(StatusPedido.PRONTO);
         }
 
         public void Finalizar()
         {
+            var preparoPedidoIniciado = VerificarExisteStatus(StatusPedido.PRONTO);
+
+            AssertionConcern.AssertArgumentTrue(preparoPedidoIniciado, "Não foi possível finalizar o pedido pois o preparo não foi finalizado!");
+
             AtualizarStatus(StatusPedido.FINALIZADO);
         }
 
@@ -120,6 +129,16 @@ namespace ControlePedido.Domain.Entities
                 return;
 
             Status.Add(new PedidoStatus(status));
+        }
+
+        private bool ValidarPagamento()
+        {
+            return Pagamento != null && Pagamento.Id != Guid.Empty;
+        }
+
+        private bool VerificarExisteStatus(StatusPedido status)
+        {
+            return Status.Any(s => s.Status == status);
         }
 
         public static class PedidoFactory

@@ -15,6 +15,9 @@ namespace ControlePedido.Api.Configuration
             services.AddTransient<ICriarPedidoUseCase, CriarPedidoUseCase>();
             services.AddTransient<IPagarPedidoUseCase, PagarPedidoUseCase>();
             services.AddTransient<IListarPedidoPorStatusUseCase, ListarPedidoPorStatusUseCase>();
+            services.AddTransient<IIniciarPreparoPedidoUseCase, IniciarPreparoPedidoUseCase>();
+            services.AddTransient<IFinalizarPreparoPedidoUseCase, FinalizarPreparoPedidoUseCase>();
+            services.AddTransient<IEntregarPedidoUseCase, EntregarPedidoUseCase>();
         }
     }
 }

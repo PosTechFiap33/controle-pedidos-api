@@ -24,6 +24,27 @@ namespace ControlePedido.Api.Controllers
             var result = await useCase.Executar(criarPedido);
             return CustomResponse(result);
         }
+
+        [HttpPatch("{pedidoId}/iniciar-preparo")]
+        public async Task<IActionResult> IniciarPreparo([FromRoute] Guid pedidoId, [FromServices] IIniciarPreparoPedidoUseCase useCase)
+        {
+            await useCase.Executar(pedidoId);
+            return Ok($"Preparo do pedido {pedidoId} iniciado com sucesso.");
+        }
+
+        [HttpPatch("{pedidoId}/finalizar-preparo")]
+        public async Task<IActionResult> FinalizarPreparo([FromRoute] Guid pedidoId, [FromServices] IFinalizarPreparoPedidoUseCase useCase)
+        {
+            await useCase.Executar(pedidoId);
+            return Ok($"Preparo do pedido {pedidoId} finalizado com sucesso.");
+        }
+
+        [HttpPatch("{pedidoId}/entregar")]
+        public async Task<IActionResult> Entregar([FromRoute] Guid pedidoId, [FromServices] IEntregarPedidoUseCase useCase)
+        {
+            await useCase.Executar(pedidoId);
+            return Ok($"Entrega do pedido {pedidoId} realizada com sucesso.");
+        }
     }
 }
 
