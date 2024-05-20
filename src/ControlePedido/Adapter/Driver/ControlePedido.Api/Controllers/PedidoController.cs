@@ -12,14 +12,14 @@ namespace ControlePedido.Api.Controllers
     public class PedidoController : MainController
     {
         [HttpGet(Name = "GetPedido")]
-        public async Task<ActionResult<Produto>> Get([FromServices] IListarPedidoPorStatusUseCase useCase, [FromQuery] StatusPedido? status)
+        public async Task<ActionResult<ICollection<Pedido>>> Get([FromServices] IListarPedidoPorStatusUseCase useCase, [FromQuery] StatusPedido? status)
         {
             var result = await useCase.Executar(status);
             return CustomResponse(result);
         }
 
         [HttpPost(Name = "PostPedido")]
-        public async Task<ActionResult<Produto>> Post([FromServices] ICriarPedidoUseCase useCase, [FromBody] CriarPedidoDTO criarPedido)
+        public async Task<ActionResult<Guid>> Post([FromServices] ICriarPedidoUseCase useCase, [FromBody] CriarPedidoDTO criarPedido)
         {
             var result = await useCase.Executar(criarPedido);
             return CustomResponse(result);

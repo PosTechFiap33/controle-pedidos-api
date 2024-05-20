@@ -10,8 +10,8 @@ namespace ControlePedido.Domain.Entities
     {
         public Guid PedidoId { get; private set; }
         public Guid ProdutoId { get; private set; }
-        public virtual Pedido Pedido { get; set; }
-        public virtual Produto Produto { get; set; }
+        public Pedido Pedido { get; set; }
+        public Produto Produto { get; set; }
 
         protected PedidoItem() { }
 
@@ -30,7 +30,7 @@ namespace ControlePedido.Domain.Entities
         public Guid PedidoId { get; private set; }
         public DateTime DataHoraPagamento { get; private set; }
         public string CodigoTransacao { get; private set; }
-        public virtual Pedido Pedido { get; private set; }
+        public Pedido Pedido { get; private set; }
 
         public PedidoPagamento(string codigoTransacao)
         {
@@ -44,7 +44,7 @@ namespace ControlePedido.Domain.Entities
         public Guid PedidoId { get; private set; }
         public StatusPedido Status { get; private set; }
         public DateTime DataHora { get; private set; }
-        public virtual Pedido Pedido { get; private set; }
+        public Pedido Pedido { get; private set; }
 
         public PedidoStatus(StatusPedido status)
         {
@@ -56,11 +56,11 @@ namespace ControlePedido.Domain.Entities
     public class Pedido : Entity, IAggregateRoot
     {
         public decimal Valor { get; private set; }
-        public Guid ClienteId { get; private set; }
-        public virtual ICollection<PedidoItem> Itens { get; private set; }
-        public virtual ICollection<PedidoStatus> Status { get; private set; }
-        public virtual PedidoPagamento Pagamento { get; private set; }
-        public virtual Cliente Cliente { get; private set; }
+        public Guid? ClienteId { get; private set; }
+        public ICollection<PedidoItem> Itens { get; private set; }
+        public ICollection<PedidoStatus> Status { get; private set; }
+        public PedidoPagamento Pagamento { get; private set; }
+        public Cliente Cliente { get; private set; }
 
         protected Pedido() { }
 
@@ -116,8 +116,10 @@ namespace ControlePedido.Domain.Entities
         {
             AssertionConcern.AssertArgumentNotNull(Pagamento, "Para avançar com o pedido é necessário realizar o pagamento!");
 
-            if (Status.Any(s => s.Status != status))
-                Status.Add(new PedidoStatus(status));
+            if (Status.Any(s => s.Status == status))
+                return;
+
+            Status.Add(new PedidoStatus(status));
         }
 
         public static class PedidoFactory

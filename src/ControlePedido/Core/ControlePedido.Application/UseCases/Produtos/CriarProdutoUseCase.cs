@@ -7,7 +7,7 @@ namespace ControlePedido.Application.UseCases.Produtos;
 
 public interface ICriarProdutoUseCase
 {
-    Task<Produto> Executar(CriarProdutoDTO criarProdutoDto);
+    Task<Guid> Executar(CriarProdutoDTO criarProdutoDto);
 }
 
 public class CriarProdutoUseCase : ICriarProdutoUseCase
@@ -19,7 +19,7 @@ public class CriarProdutoUseCase : ICriarProdutoUseCase
         _repository = repository;
     }
 
-    public async Task<Produto> Executar(CriarProdutoDTO criarProdutoDto)
+    public async Task<Guid> Executar(CriarProdutoDTO criarProdutoDto)
     {
         var imagem = new Imagem(criarProdutoDto.UrlImagem, criarProdutoDto.ExtensaoImagem, criarProdutoDto.Nome);
         
@@ -29,6 +29,6 @@ public class CriarProdutoUseCase : ICriarProdutoUseCase
        
         await _repository.UnitOfWork.Commit();
 
-        return produto;
+        return produto.Id;
     }
 }

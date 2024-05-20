@@ -65,8 +65,9 @@ namespace ControlePedido.Infra.Repositories
 
             if (status.HasValue)
             {
-                query = query.Include(p => p.Status)
-                             .Where(p => p.Status.Any(s => s.Status == status));
+                query = query.Where(p => p.Status
+                             .OrderByDescending(s => s.DataHora)
+                             .FirstOrDefault().Status == status);
             }
 
             return await query.ToListAsync();

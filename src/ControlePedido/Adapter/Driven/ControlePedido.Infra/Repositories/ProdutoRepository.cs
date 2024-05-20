@@ -21,9 +21,9 @@ public class ProdutoRepository : IProdutoRepository
         _context.Add(produto);
     }
 
-    public Task<List<Produto>> ListarPorCategoria(Categoria categoria)
+    public async Task<ICollection<Produto>> ListarPorCategoria(Categoria categoria)
     {
-        return _context.Produto.AsNoTracking().Where(x => x.Categoria == categoria).ToListAsync();
+        return await _context.Produto.AsNoTracking().Where(x => x.Categoria == categoria).ToListAsync();
     }
 
     public Task<Produto?> ConsultarPorId(Guid produtoId)

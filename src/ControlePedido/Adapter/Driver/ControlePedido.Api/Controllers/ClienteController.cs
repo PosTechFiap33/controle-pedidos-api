@@ -25,7 +25,7 @@ namespace ControlePedido.Api.Controllers
         }
 
         [HttpPost(Name = "PostCliente")]
-        public async Task<ActionResult<Cliente>> Post([FromServices] ICriarClienteUseCase useCase, [FromBody] CriarClienteDTO cliente)
+        public async Task<ActionResult<Guid>> Post([FromServices] ICriarClienteUseCase useCase, [FromBody] CriarClienteDTO cliente)
         {
             var result = await useCase.Executar(cliente.Nome, cliente.Cpf, cliente.Email);
             return CustomResponse(result);

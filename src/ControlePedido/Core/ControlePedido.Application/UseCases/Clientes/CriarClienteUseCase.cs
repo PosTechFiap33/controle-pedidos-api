@@ -6,7 +6,7 @@ namespace ControlePedido.Application.UseCases.Clientes
 {
     public interface ICriarClienteUseCase
 	{
-		Task<Cliente> Executar(string nome, string cpf, string email);
+		Task<Guid> Executar(string nome, string cpf, string email);
 	}
 
     public class CriarClienteUseCase : ICriarClienteUseCase
@@ -18,7 +18,7 @@ namespace ControlePedido.Application.UseCases.Clientes
             _repository = repository;
         }
 
-        public async Task<Cliente> Executar(string nome, string cpf, string email)
+        public async Task<Guid> Executar(string nome, string cpf, string email)
         {
             var cliente = new Cliente(nome, cpf, email);
 
@@ -36,7 +36,7 @@ namespace ControlePedido.Application.UseCases.Clientes
 
             await _repository.UnitOfWork.Commit();
 
-            return cliente;
+            return cliente.Id;
         }
     }
 }

@@ -11,6 +11,6 @@ namespace ControlePedido.Domain.Adapters.Repositories
     {
         void Criar(Produto produto);
         Task<Produto?> ConsultarPorId(Guid produtoId);
-        Task<List<Produto>> ListarPorCategoria(Categoria categoria);       
+        Task<ICollection<Produto>> ListarPorCategoria(Categoria categoria);       
     }
 }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControlePedido.Infra.Migrations
 {
     [DbContext(typeof(ControlePedidoContext))]
-    [Migration("20240518205131_AddColunaValorEmPedido")]
-    partial class AddColunaValorEmPedido
+    [Migration("20240520221831_InitialMigrations")]
+    partial class InitialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,20 +47,8 @@ namespace ControlePedido.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ClienteId")
+                    b.Property<Guid?>("ClienteId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("DataHoraCriacao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DataHoraFim")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DataHoraInicio")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("numeric");
@@ -115,6 +103,28 @@ namespace ControlePedido.Infra.Migrations
                         .IsUnique();
 
                     b.ToTable("Pagamentos", (string)null);
+                });
+
+            modelBuilder.Entity("ControlePedido.Domain.Entities.PedidoStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DataHora")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PedidoId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.ToTable("PedidoStatus", (string)null);
                 });
 
             modelBuilder.Entity("ControlePedido.Domain.Entities.Produto", b =>
@@ -233,6 +243,17 @@ namespace ControlePedido.Infra.Migrations
                     b.Navigation("Pedido");
                 });
 
+            modelBuilder.Entity("ControlePedido.Domain.Entities.PedidoStatus", b =>
+                {
+                    b.HasOne("ControlePedido.Domain.Entities.Pedido", "Pedido")
+                        .WithMany("Status")
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+                });
+
             modelBuilder.Entity("ControlePedido.Domain.Entities.Produto", b =>
                 {
                     b.OwnsOne("ControlePedido.Domain.ValueObjects.Imagem", "Imagem", b1 =>
@@ -280,6 +301,8 @@ namespace ControlePedido.Infra.Migrations
 
                     b.Navigation("Pagamento")
                         .IsRequired();
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("ControlePedido.Domain.Entities.Produto", b =>

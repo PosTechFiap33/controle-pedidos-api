@@ -67,6 +67,9 @@ public class PedidoMapping : IEntityTypeConfiguration<Pedido>
         builder.Property(p => p.Valor)
                .IsRequired();
 
+        builder.Property(p => p.ClienteId)
+               .IsRequired(false);
+
         builder.HasOne(p => p.Cliente)
                .WithMany(p => p.Pedidos)
                .HasForeignKey(p => p.ClienteId);

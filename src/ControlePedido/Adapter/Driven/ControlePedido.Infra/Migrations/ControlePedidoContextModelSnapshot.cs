@@ -44,7 +44,7 @@ namespace ControlePedido.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ClienteId")
+                    b.Property<Guid?>("ClienteId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("Valor")

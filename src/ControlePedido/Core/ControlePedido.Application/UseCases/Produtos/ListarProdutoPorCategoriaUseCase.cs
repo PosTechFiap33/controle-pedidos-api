@@ -7,7 +7,7 @@ namespace ControlePedido.Application.UseCases.Produtos;
 
 public interface IListarProdutoPorCategoriaUseCase
 {
-    Task<List<Produto>> Executar(Categoria categoria);
+    Task<ICollection<Produto>> Executar(Categoria categoria);
 }
 
 public class ListarProdutoPorCategoriaUseCase : IListarProdutoPorCategoriaUseCase
@@ -19,7 +19,7 @@ public class ListarProdutoPorCategoriaUseCase : IListarProdutoPorCategoriaUseCas
         _repository = repository;
     }
 
-    public Task<List<Produto>> Executar(Categoria categoria)
+    public Task<ICollection<Produto>> Executar(Categoria categoria)
     {
         if (categoria <= 0 || categoria == null)
             throw new DomainException("Categoria inválida!");
