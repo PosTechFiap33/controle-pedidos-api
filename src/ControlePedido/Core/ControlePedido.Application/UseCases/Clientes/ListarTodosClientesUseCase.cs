@@ -1,12 +1,12 @@
-﻿using ControlePedido.Domain.Adapters.Repositories;
-using ControlePedido.Domain.Entities;
+﻿using ControlePedido.Application.DTOs;
+using ControlePedido.Domain.Adapters.Repositories;
 
 namespace ControlePedido.Application.UseCases.Clientes
 {
 
     public interface IListarTodosClientesUseCase
 	{
-		Task<ICollection<Cliente>> Executar();
+		Task<ICollection<ClienteDTO>> Executar();
 	}
 
 	public class ListarTodosClientesUseCase : IListarTodosClientesUseCase
@@ -18,10 +18,12 @@ namespace ControlePedido.Application.UseCases.Clientes
             _repository = repository;
         }
 
-        public async Task<ICollection<Cliente>> Executar()
+        public async Task<ICollection<ClienteDTO>> Executar()
         {
-            return await _repository.ListarTodos();
-        }
+            var clientes = await _repository.ListarTodos();
+            return clientes.Select(c => new ClienteDTO(c.Nome, c.Cpf.Numero, c.Email.Endereco))
+                           .ToList();
+        }              
     }
 }
 

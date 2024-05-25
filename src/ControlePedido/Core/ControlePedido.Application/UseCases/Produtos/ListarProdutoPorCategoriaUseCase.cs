@@ -1,13 +1,13 @@
-﻿using ControlePedido.Domain.Adapters.Repositories;
+﻿using ControlePedido.Application.DTOs;
+using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Base;
-using ControlePedido.Domain.Entities;
 using ControlePedido.Domain.Enums;
 
 namespace ControlePedido.Application.UseCases.Produtos;
 
 public interface IListarProdutoPorCategoriaUseCase
 {
-    Task<ICollection<Produto>> Executar(Categoria categoria);
+    Task<ICollection<ProdutoDTO>> Executar(Categoria categoria);
 }
 
 public class ListarProdutoPorCategoriaUseCase : IListarProdutoPorCategoriaUseCase
@@ -19,11 +19,14 @@ public class ListarProdutoPorCategoriaUseCase : IListarProdutoPorCategoriaUseCas
         _repository = repository;
     }
 
-    public Task<ICollection<Produto>> Executar(Categoria categoria)
+    public async Task<ICollection<ProdutoDTO>> Executar(Categoria categoria)
     {
         if (categoria <= 0 || categoria == null)
             throw new DomainException("Categoria inválida!");
 
-        return _repository.ListarPorCategoria(categoria);
+        var produtos = await _repository.ListarPorCategoria(categoria);
+
+        return produtos.Select(p => new ProdutoDTO(p))
+                       .ToList();
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
-using ControlePedido.Api.Base;
 using ControlePedido.Domain.Base;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ControlePedido.Api.Middleware
 {

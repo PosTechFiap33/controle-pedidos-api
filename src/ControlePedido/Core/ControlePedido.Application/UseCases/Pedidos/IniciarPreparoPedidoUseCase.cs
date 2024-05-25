@@ -1,5 +1,4 @@
-﻿using ControlePedido.Domain.Adapters.Providers;
-using ControlePedido.Domain.Adapters.Repositories;
+﻿using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Base;
 
 namespace ControlePedido.Application.UseCases.Pedidos

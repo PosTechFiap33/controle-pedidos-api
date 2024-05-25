@@ -1,4 +1,6 @@
-﻿using ControlePedido.Api.Middleware;
+﻿using System.Reflection;
+using ControlePedido.Api.Middleware;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
 namespace ControlePedido.Api.Configuration
@@ -11,8 +13,40 @@ namespace ControlePedido.Api.Configuration
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Minha API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Controle de pedidos",
+                    Version = "v1",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "DiscordName: Flavio - rm353688"
+                    }
+                });
+
                 c.SchemaFilter<EnumDescriptionFilter>();
+
+                // Inclui a documentação XML gerada nos comentários do código
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+                c.MapType<ValidationProblemDetails>(() => new OpenApiSchema
+                {
+                    Type = "object",
+                    Properties = new Dictionary<string, OpenApiSchema>
+                    {
+                        { "title", new OpenApiSchema { Type = "string" } },
+                        { "errors", new OpenApiSchema
+                            {
+                                Type = "object",
+                                Properties = new Dictionary<string, OpenApiSchema>
+                                {
+                                    { "Mensagens", new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } } }
+                                }
+                            }
+                        }
+                    }
+                });
             });
 
             return services;
@@ -25,5 +59,7 @@ namespace ControlePedido.Api.Configuration
             return app;
         }
     }
+
+
 }
 

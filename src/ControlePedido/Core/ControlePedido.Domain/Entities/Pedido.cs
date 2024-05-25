@@ -115,6 +115,13 @@ namespace ControlePedido.Domain.Entities
             AtualizarStatus(StatusPedido.FINALIZADO);
         }
 
+        public StatusPedido RetornarStatusAtual()
+        {
+            return Status.OrderByDescending(p => p.DataHora)
+                         .FirstOrDefault()
+                         .Status;
+        }
+
         private void AtualizarStatus(StatusPedido status)
         {
             AssertionConcern.AssertArgumentNotNull(Pagamento, "Para avançar com o pedido é necessário realizar o pagamento!");

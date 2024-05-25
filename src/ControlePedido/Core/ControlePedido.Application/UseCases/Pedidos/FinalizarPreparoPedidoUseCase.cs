@@ -1,7 +1,5 @@
-﻿using System;
-using ControlePedido.Domain.Adapters.Repositories;
+﻿using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Base;
-using ControlePedido.Domain.Enums;
 
 namespace ControlePedido.Application.UseCases.Pedidos
 {

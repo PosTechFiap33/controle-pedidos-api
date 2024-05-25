@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ControlePedido.Api.Base
 {
@@ -6,10 +7,10 @@ namespace ControlePedido.Api.Base
 	{
         protected ICollection<string> Erros = new List<string>();
 
-        protected ActionResult CustomResponse(object? result = null)
+        protected ActionResult CustomResponse(object? result = null, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             if (OperacaoValida())
-                return Ok(result);
+                return StatusCode((int)statusCode, result);
 
             return BadRequest(RecuperarErros());
         }

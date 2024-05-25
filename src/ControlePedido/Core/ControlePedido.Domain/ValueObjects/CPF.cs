@@ -25,54 +25,54 @@ namespace ControlePedido.Domain.ValueObjects
         {
             AssertionConcern.AssertArgumentExactlyLength(Numero, 11, "Cpf deve conter 11 caracters!");
 
-            var cpfValidation = IsValidCPF(Numero);
-            AssertionConcern.AssertArgumentTrue(cpfValidation, "Cpf inválido!");
+            var cpfValido = ValidarCpf(Numero);
+            AssertionConcern.AssertArgumentTrue(cpfValido, "Cpf inválido!");
         }
 
-        private bool IsValidCPF(string cpf)
+        public static bool ValidarCpf(string cpf)
         {
-            int[] multiplier1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            int[] multiplier2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            cpf = cpf.Replace(".", "").Replace("-", "");
 
-            string tempCpf = cpf.Substring(0, 9);
-            int sum = 0;
+            if (cpf.Length != 11)
+                return false;
 
+            bool todosDigitosIguais = true;
+            for (int i = 1; i < cpf.Length; i++)
+            {
+                if (cpf[i] != cpf[0])
+                {
+                    todosDigitosIguais = false;
+                    break;
+                }
+            }
+            if (todosDigitosIguais)
+                return false;
+
+            int soma = 0;
             for (int i = 0; i < 9; i++)
             {
-                sum += int.Parse(tempCpf[i].ToString()) * multiplier1[i];
+                soma += (10 - i) * int.Parse(cpf[i].ToString());
             }
+            int primeiroDigito = 11 - (soma % 11);
+            if (primeiroDigito >= 10)
+                primeiroDigito = 0;
 
-            int remainder = sum % 11;
-            if (remainder < 2)
-            {
-                remainder = 0;
-            }
-            else
-            {
-                remainder = 11 - remainder;
-            }
+            if (int.Parse(cpf[9].ToString()) != primeiroDigito)
+                return false;
 
-            string digit = remainder.ToString();
-            tempCpf += digit;
-            sum = 0;
-
+            soma = 0;
             for (int i = 0; i < 10; i++)
             {
-                sum += int.Parse(tempCpf[i].ToString()) * multiplier2[i];
+                soma += (11 - i) * int.Parse(cpf[i].ToString());
             }
+            int segundodigito = 11 - (soma % 11);
+            if (segundodigito >= 10)
+                segundodigito = 0;
 
-            remainder = sum % 11;
-            if (remainder < 2)
-            {
-                remainder = 0;
-            }
-            else
-            {
-                remainder = 11 - remainder;
-            }
+            if (int.Parse(cpf[10].ToString()) != segundodigito)
+                return false;
 
-            digit += remainder.ToString();
-            return cpf.EndsWith(digit);
+            return true;
         }
     }
 }
