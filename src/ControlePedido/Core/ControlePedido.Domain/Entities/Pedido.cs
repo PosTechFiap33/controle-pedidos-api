@@ -115,12 +115,6 @@ namespace ControlePedido.Domain.Entities
             AtualizarStatus(StatusPedido.FINALIZADO);
         }
 
-        private void ValidateEntity()
-        {
-            AssertionConcern.AssertArgumentNotEquals(Itens.Any(), false, "O Pedido deve conter pelo nenos 1 item!");
-            AssertionConcern.AssertGratherThanValue(Valor, 0, "O valor do pedido deve ser maior que 0!");
-        }
-
         private void AtualizarStatus(StatusPedido status)
         {
             AssertionConcern.AssertArgumentNotNull(Pagamento, "Para avançar com o pedido é necessário realizar o pagamento!");
@@ -139,6 +133,12 @@ namespace ControlePedido.Domain.Entities
         private bool VerificarExisteStatus(StatusPedido status)
         {
             return Status.Any(s => s.Status == status);
+        }
+
+        private void ValidateEntity()
+        {
+            AssertionConcern.AssertArgumentNotEquals(Itens.Any(), false, "O Pedido deve conter pelo nenos 1 item!");
+            AssertionConcern.AssertGratherThanValue(Valor, 0, "O valor do pedido deve ser maior que 0!");
         }
 
         public static class PedidoFactory

@@ -9,14 +9,16 @@ services:
     image: postgres:12
     container_name: controlepedido.database
     environment:
-      POSTGRES_PASSWORD: "sgpDb347#"
+      POSTGRES_PASSWORD: /run/secrets/db_password
       PGDATA: /data/postgres/sgp
     volumes:
-     - ./docker-conf/postgres/:/data/postgres
+      - db_data:/data/postgres
     ports:
-        - "5432:5432"
+      - "5432:5432"
     networks:
-        - controlepedido-network
+      - controlepedido-network
+    secrets:
+      - db_password
 
   controlepedido.api:
     image: ${DOCKER_REGISTRY-}controlepedido
@@ -28,7 +30,13 @@ services:
     networks:
         - controlepedido-network
     environment:
-        - DbConnection=Host=controlepedido.database;Port=5432;Pooling=true;Database=SGP;User Id=postgres;Password=sgpDb347#;
-   # depends_on: # no vs para mac trava o debug por algum motivo deixar desativado por enquanto
-   #   - controlepedido.database
+      - DbConnection=Host=controlepedido.database;Port=5432;Pooling=true;Database=SGP;User Id=postgres;Password=/run/secrets/db_password;
+    depends_on: # no vs para mac trava o debug por algum motivo deixar desativado por enquanto
+      - controlepedido.database
 
+secrets:
+   db_password:
+     file: ./infra/db_password.txt
+
+volumes:
+    db_data:

@@ -5,15 +5,16 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-ENV TZ=America/Sao_Paulo
-
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["ControlePedido.Api/ControlePedido.Api.csproj", "ControlePedido.Api/"]
-COPY ["ControlePedido.Infra/ControlePedido.Infra.csproj", "ControlePedido.Infra/"]
-RUN dotnet restore "ControlePedido.Api/ControlePedido.Api.csproj"
+COPY ["Adapter/Driver/ControlePedido.Api/ControlePedido.Api.csproj", "Adapter/Driver/ControlePedido.Api/"]
+COPY ["Core/ControlePedido.Application/ControlePedido.Application.csproj", "Core/ControlePedido.Application/"]
+COPY ["Core/ControlePedido.Domain/ControlePedido.Domain.csproj", "Core/ControlePedido.Domain/"]
+COPY ["Adapter/Driven/ControlePedido.Infra/ControlePedido.Infra.csproj", "Adapter/Driven/ControlePedido.Infra/"]
+COPY ["Adapter/Driven/ControlePedido.Payment/ControlePedido.Payment.csproj", "Adapter/Driven/ControlePedido.Payment/"]
+RUN dotnet restore "Adapter/Driver/ControlePedido.Api/ControlePedido.Api.csproj"
 COPY . .
-WORKDIR "/src/ControlePedido.Api"
+WORKDIR "/src/Adapter/Driver/ControlePedido.Api"
 RUN dotnet build "ControlePedido.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
