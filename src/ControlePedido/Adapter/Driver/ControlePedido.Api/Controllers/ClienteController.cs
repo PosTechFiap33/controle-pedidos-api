@@ -50,7 +50,7 @@ namespace ControlePedido.Api.Controllers
         /// <param name="cliente">Os dados do cliente a serem criados.</param>
         /// <returns>O cliente recém-criado.</returns>
         [HttpPost]
-        [ProducesResponseType(201, Type = typeof(ClienteDTO))]
+        [ProducesResponseType(201, Type = typeof(Guid))]
         [ProducesResponseType(400, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(500, Type = typeof(ValidationProblemDetails))]
         public async Task<ActionResult<Guid>> Post([FromServices] ICriarClienteUseCase useCase, [FromBody] CriarClienteDTO cliente)

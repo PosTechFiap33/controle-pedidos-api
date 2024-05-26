@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
     <UserSecretsId>49f7e14d-2460-455f-81a8-e3efb3d4d49c</UserSecretsId>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -31,13 +32,7 @@
     <Folder Include="Base\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\ControlePedido.Application\ControlePedido.Application.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Driven\ControlePedido.Infra\ControlePedido.Infra.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Driven\ControlePedido.Payment\ControlePedido.Payment.csproj">
+    <ProjectReference Include="..\..\ControlePedido.IOC\ControlePedido.IOC.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
@@ -45,5 +40,6 @@
     <Compile Remove="WeatherForecast.cs" />
     <Compile Remove="Middleware\DefaultProducesResponseTypeAttributeFilter.cs" />
     <Compile Remove="Middleware\AddValidationProblemDetailsAttributeFilter.cs" />
+    <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
   </ItemGroup>
 </Project>
