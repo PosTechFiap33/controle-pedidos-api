@@ -1,8 +1,10 @@
-﻿using ControlePedido.Domain.Entities;
+﻿using System.ComponentModel;
+using ControlePedido.Domain.Entities;
 using ControlePedido.Domain.Enums;
 
 namespace ControlePedido.Application.DTOs
 {
+    [DisplayName("Produto")]
     public class ProdutoDTO
 	{
         public Guid Id { get; private set; }

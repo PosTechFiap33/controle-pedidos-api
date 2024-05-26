@@ -1,5 +1,8 @@
-﻿namespace ControlePedido.Application.DTOs
+﻿using System.ComponentModel;
+
+namespace ControlePedido.Application.DTOs
 {
+    [DisplayName("Cliente")]
     public class ClienteDTO
     {
         public string Nome { get; private set; }

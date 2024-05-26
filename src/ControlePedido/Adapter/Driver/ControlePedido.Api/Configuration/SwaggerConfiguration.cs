@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using ControlePedido.Api.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -24,6 +25,15 @@ namespace ControlePedido.Api.Configuration
                 });
 
                 c.SchemaFilter<EnumDescriptionFilter>();
+
+                c.CustomSchemaIds(x => {
+                    var displayName = x.GetCustomAttributes<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+
+                    if (!string.IsNullOrEmpty(displayName))
+                        return x.GetCustomAttributes<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+
+                    return x.Name;
+                });
 
                 // Inclui a documentação XML gerada nos comentários do código
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

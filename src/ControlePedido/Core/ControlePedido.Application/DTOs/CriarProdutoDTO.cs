@@ -1,7 +1,9 @@
-﻿using ControlePedido.Domain.Enums;
+﻿using System.ComponentModel;
+using ControlePedido.Domain.Enums;
 
 namespace ControlePedido.Application.DTOs
 {
+    [DisplayName("CriarProduto")]
     public class CriarProdutoDTO
     {
         public string Nome { get; set; }

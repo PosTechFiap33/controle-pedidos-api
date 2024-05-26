@@ -1,7 +1,9 @@
-﻿using ControlePedido.Domain.Entities;
+﻿using System.ComponentModel;
+using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Application.DTOs
 {
+    [DisplayName("PedidoCriado")]
     public class PedidoCriadoDTO
 	{
         public PedidoDTO Pedido { get; private set; }
