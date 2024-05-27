@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using ControlePedido.Api.Middleware;
+using ControlePedido.IOC.DependencyInjections;
 using ControlePedido.Infra.Configuration;
-using ControlePedido.Payment.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControlePedido.Api.Configuration
@@ -21,6 +21,8 @@ namespace ControlePedido.Api.Configuration
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddDatabaseConfiguration(configuration);
+
+            services.RegisterRepositories();
 
             services.RegisterPaymentServices();
 

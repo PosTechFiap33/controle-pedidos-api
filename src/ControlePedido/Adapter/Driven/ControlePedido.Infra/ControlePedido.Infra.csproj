@@ -30,4 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
+  </ItemGroup>
 </Project>

@@ -1,5 +1,8 @@
-﻿namespace ControlePedido.Application.DTOs
+﻿using System.ComponentModel;
+
+namespace ControlePedido.Application.DTOs
 {
+    [DisplayName("PagarPedido")]
     public class PagarPedidoDTO
 	{
 		public Guid PedidoId { get; set; }

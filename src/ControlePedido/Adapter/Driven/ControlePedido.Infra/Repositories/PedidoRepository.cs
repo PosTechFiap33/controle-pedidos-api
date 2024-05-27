@@ -60,6 +60,9 @@ namespace ControlePedido.Infra.Repositories
         public async Task<ICollection<Pedido>> ListarPorStatus(StatusPedido? status)
         {
             IQueryable<Pedido> query = _context.Pedido
+                                               .Include(p => p.Itens)
+                                               .ThenInclude(i => i.Produto)
+                                               .Include(p => p.Cliente)
                                                .Include(p => p.Status)
                                                .AsNoTracking();
 

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControlePedido.Application.DTOs
 {
+    [DisplayName("CriarCliente")]
     public class CriarClienteDTO
     {
         [Required(ErrorMessage = "Campo {0} obrigatorio")]

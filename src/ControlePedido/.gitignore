@@ -16,7 +16,10 @@ obj/
 bin/
 Adapter/Driven/ControlePedido.Payment/obj/
 Adapter/Driven/ControlePedido.Payment/bin/
-
+Adapter/ControlePedido.IOC/obj/
+Adapter/ControlePedido.IOC/bin/
+Adapter/Driver/ControlePedido.API/obj/
+Adapter/Driver/ControlePedido.API/bin/
 # Mac bundle stuff
 *.dmg
 *.app

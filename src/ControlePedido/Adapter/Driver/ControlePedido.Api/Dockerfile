@@ -12,6 +12,7 @@ COPY ["Core/ControlePedido.Application/ControlePedido.Application.csproj", "Core
 COPY ["Core/ControlePedido.Domain/ControlePedido.Domain.csproj", "Core/ControlePedido.Domain/"]
 COPY ["Adapter/Driven/ControlePedido.Infra/ControlePedido.Infra.csproj", "Adapter/Driven/ControlePedido.Infra/"]
 COPY ["Adapter/Driven/ControlePedido.Payment/ControlePedido.Payment.csproj", "Adapter/Driven/ControlePedido.Payment/"]
+COPY ["Adapter/ControlePedido.IOC/ControlePedido.IOC.csproj", "Adapter/ControlePedido.IOC/"]
 RUN dotnet restore "Adapter/Driver/ControlePedido.Api/ControlePedido.Api.csproj"
 COPY . .
 WORKDIR "/src/Adapter/Driver/ControlePedido.Api"
@@ -23,4 +24,5 @@ RUN dotnet publish "ControlePedido.Api.csproj" -c Release -o /app/publish /p:Use
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "ControlePedido.Api.dll"]

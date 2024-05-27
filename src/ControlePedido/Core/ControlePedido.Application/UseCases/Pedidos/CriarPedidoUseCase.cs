@@ -9,7 +9,7 @@ namespace ControlePedido.Application.UseCases.Pedidos
 {
     public interface ICriarPedidoUseCase
     {
-        Task<string> Executar(CriarPedidoDTO criarPedidoDTO);
+        Task<PedidoCriadoDTO> Executar(CriarPedidoDTO criarPedidoDTO);
     }
 
     public class CriarPedidoUseCase : ICriarPedidoUseCase
@@ -30,7 +30,7 @@ namespace ControlePedido.Application.UseCases.Pedidos
             _clienteRepository = clienteRepository;
         }
 
-        public async Task<string> Executar(CriarPedidoDTO criarPedidoDTO)
+        public async Task<PedidoCriadoDTO> Executar(CriarPedidoDTO criarPedidoDTO)
         {
             Cliente? cliente = await ConsultarCliente(criarPedidoDTO.CpfCliente);
 
@@ -50,7 +50,9 @@ namespace ControlePedido.Application.UseCases.Pedidos
 
             await SalvarPedido(pedido);
 
-            return _pagamentoProvider.GerarQRCodePagamento(pedido);
+            var qrCode = _pagamentoProvider.GerarQRCodePagamento(pedido);
+
+            return new PedidoCriadoDTO(pedido, qrCode);
         }
 
         private async Task<Cliente?> ConsultarCliente(string cpfCliente)

@@ -1,11 +1,10 @@
-﻿using System;
-using ControlePedido.Domain.Adapters.Repositories;
+﻿using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Base;
 
 namespace ControlePedido.Application.UseCases.Pedidos
 {
 
-	public interface IEntregarPedidoUseCase
+    public interface IEntregarPedidoUseCase
 	{
 		Task Executar(Guid pedidoId);
 	}
