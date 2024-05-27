@@ -19,6 +19,7 @@ namespace ControlePedido.IOC.DependencyInjections
             services.AddTransient<IIniciarPreparoPedidoUseCase, IniciarPreparoPedidoUseCase>();
             services.AddTransient<IFinalizarPreparoPedidoUseCase, FinalizarPreparoPedidoUseCase>();
             services.AddTransient<IEntregarPedidoUseCase, EntregarPedidoUseCase>();
+            services.AddTransient<IAcompanharPedidoUseCase, AcompanharPedidoUseCase>();
         }
     }
 }

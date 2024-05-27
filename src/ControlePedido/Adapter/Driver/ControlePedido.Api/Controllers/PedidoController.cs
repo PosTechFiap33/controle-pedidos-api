@@ -35,6 +35,28 @@ namespace ControlePedido.Api.Controllers
         }
 
         /// <summary>
+        /// Obtém informações de acompanhamento de um pedido com base no ID fornecido.
+        /// </summary>
+        /// <remarks>
+        /// Retorna os detalhes de acompanhamento do pedido identificado pelo ID. Se o ID não corresponder
+        /// a nenhum pedido existente, retorna um erro correspondente.
+        /// </remarks>
+        /// <param name="useCase">A instância do caso de uso para obter informações de acompanhamento do pedido.</param>
+        /// <param name="id">O identificador único do pedido.</param>
+        /// <returns>
+        /// Uma ação HTTP que retorna as informações de acompanhamento do pedido.
+        /// </returns>
+        [HttpGet("{id}/acompanhar")]
+        [ProducesResponseType(200, Type = typeof(AcompanhamentoPedidoDTO))]
+        [ProducesResponseType(400, Type = typeof(ValidationProblemDetails))]
+        [ProducesResponseType(500, Type = typeof(ValidationProblemDetails))]
+        public async Task<ActionResult<AcompanhamentoPedidoDTO>> Acompanhar([FromServices] IAcompanharPedidoUseCase useCase, Guid id)
+        {
+            var result = await useCase.Executar(id);
+            return CustomResponse(result);
+        }
+
+        /// <summary>
         /// Cria um novo pedido com base nos dados fornecidos.
         /// </summary>
         /// <remarks>
