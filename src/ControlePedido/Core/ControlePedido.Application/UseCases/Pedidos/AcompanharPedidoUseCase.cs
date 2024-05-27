@@ -4,11 +4,6 @@ using ControlePedido.Domain.Base;
 
 namespace ControlePedido.Application.UseCases.Pedidos;
 
-public interface IAcompanharPedidoUseCase
-{
-    Task<AcompanhamentoPedidoDTO> Executar(Guid pedidoId);
-}
-
 public class AcompanharPedidoUseCase : IAcompanharPedidoUseCase
 {
     private readonly IPedidoRepository _repository;

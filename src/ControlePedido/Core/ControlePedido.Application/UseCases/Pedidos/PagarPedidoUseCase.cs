@@ -1,18 +1,11 @@
-﻿using System;
-using ControlePedido.Application.DTOs;
+﻿using ControlePedido.Application.DTOs;
 using ControlePedido.Domain.Adapters.Providers;
 using ControlePedido.Domain.Adapters.Repositories;
 using ControlePedido.Domain.Base;
-using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Application.UseCases.Pedidos
 {
-	public interface IPagarPedidoUseCase
-	{
-		Task Executar(PagarPedidoDTO pagarPedido);
-	}
-
-	public class PagarPedidoUseCase : IPagarPedidoUseCase
+    public class PagarPedidoUseCase : IPagarPedidoUseCase
 	{
 		private readonly IPedidoRepository _repository;
         private readonly IPagamentoProvider _pagamentoProvider;

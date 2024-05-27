@@ -4,11 +4,6 @@ using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Application.UseCases.Clientes
 {
-    public interface ICriarClienteUseCase
-	{
-		Task<Guid> Executar(string nome, string cpf, string email);
-	}
-
     public class CriarClienteUseCase : ICriarClienteUseCase
     {
         private readonly IClienteRepository _repository;

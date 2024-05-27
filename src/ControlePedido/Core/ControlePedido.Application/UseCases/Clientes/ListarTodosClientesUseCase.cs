@@ -3,13 +3,7 @@ using ControlePedido.Domain.Adapters.Repositories;
 
 namespace ControlePedido.Application.UseCases.Clientes
 {
-
-    public interface IListarTodosClientesUseCase
-	{
-		Task<ICollection<ClienteDTO>> Executar();
-	}
-
-	public class ListarTodosClientesUseCase : IListarTodosClientesUseCase
+    public class ListarTodosClientesUseCase : IListarTodosClientesUseCase
 	{
 		private readonly IClienteRepository _repository;
 

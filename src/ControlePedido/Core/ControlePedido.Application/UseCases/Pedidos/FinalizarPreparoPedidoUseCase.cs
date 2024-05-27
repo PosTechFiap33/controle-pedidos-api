@@ -3,11 +3,6 @@ using ControlePedido.Domain.Base;
 
 namespace ControlePedido.Application.UseCases.Pedidos
 {
-    public interface IFinalizarPreparoPedidoUseCase
-    {
-        Task Executar(Guid pedidoId);
-    }
-
     public class FinalizarPreparoPedidoUseCase : IFinalizarPreparoPedidoUseCase
 	{
         private readonly IPedidoRepository _repository;

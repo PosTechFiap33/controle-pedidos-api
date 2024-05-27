@@ -7,11 +7,6 @@ using static ControlePedido.Domain.Entities.Pedido;
 
 namespace ControlePedido.Application.UseCases.Pedidos
 {
-    public interface ICriarPedidoUseCase
-    {
-        Task<PedidoCriadoDTO> Executar(CriarPedidoDTO criarPedidoDTO);
-    }
-
     public class CriarPedidoUseCase : ICriarPedidoUseCase
     {
         private readonly IPedidoRepository _repository;
