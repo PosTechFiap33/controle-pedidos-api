@@ -77,7 +77,7 @@ namespace ControlePedido.Domain.Entities
         private Pedido(ICollection<PedidoItem> itens, Cliente cliente) : this(itens)
         {
             Cliente = cliente;
-            ClienteId = cliente.Id;
+            ClienteId = cliente?.Id;
             AssertionConcern.AssertArgumentNotEquals(Guid.Empty, ClienteId, "Codigo do cliente não foi informado!");
         }
 

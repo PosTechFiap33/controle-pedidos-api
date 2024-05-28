@@ -31,8 +31,8 @@ services:
         - controlepedido-network
     environment:
       - DbConnection=Host=controlepedido.database;Port=5432;Pooling=true;Database=SGP;User Id=postgres;Password=/run/secrets/db_password;
-    depends_on: # no vs para mac trava o debug por algum motivo deixar desativado por enquanto
-      - controlepedido.database
+   # depends_on: # no vs para mac trava o debug por algum motivo deixar desativado por enquanto
+   #  - controlepedido.database
 
 secrets:
    db_password:

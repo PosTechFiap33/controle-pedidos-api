@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.Payment", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.IOC", "Adapter\ControlePedido.IOC\ControlePedido.IOC.csproj", "{0D9F9E0C-2458-4BA0-A202-67F15016D827}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.UnitTests", "..\Tests\ControlePedido.UnitTests\ControlePedido.UnitTests.csproj", "{63A21522-8EDB-49CA-BFCD-BED48353188E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{0D9F9E0C-2458-4BA0-A202-67F15016D827}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D9F9E0C-2458-4BA0-A202-67F15016D827}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D9F9E0C-2458-4BA0-A202-67F15016D827}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A21522-8EDB-49CA-BFCD-BED48353188E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A21522-8EDB-49CA-BFCD-BED48353188E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A21522-8EDB-49CA-BFCD-BED48353188E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A21522-8EDB-49CA-BFCD-BED48353188E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,5 +83,6 @@ Global
 		{D5852AF7-E5EA-42DB-B982-4F0F43C20358} = {FCB0EEB5-125B-45C4-80BB-5E23345E0164}
 		{BA7D6BD9-11DB-4815-BB6F-AB5401B4B7EC} = {1ED6241C-C7DC-4ABD-9C10-5C2BCEDC806D}
 		{0D9F9E0C-2458-4BA0-A202-67F15016D827} = {AF5F9EF8-5F60-409E-B67A-418FCC99CA29}
+		{63A21522-8EDB-49CA-BFCD-BED48353188E} = {664DC37E-73AF-4133-948B-C919FD4965B4}
 	EndGlobalSection
 EndGlobal
