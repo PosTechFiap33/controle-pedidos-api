@@ -5,11 +5,6 @@ using ControlePedido.Domain.ValueObjects;
 
 namespace ControlePedido.Application.UseCases.Produtos;
 
-public interface ICriarProdutoUseCase
-{
-    Task<Guid> Executar(CriarProdutoDTO criarProdutoDto);
-}
-
 public class CriarProdutoUseCase : ICriarProdutoUseCase
 {
     private readonly IProdutoRepository _repository;

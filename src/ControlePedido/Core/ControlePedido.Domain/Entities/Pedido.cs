@@ -74,9 +74,10 @@ namespace ControlePedido.Domain.Entities
             ValidateEntity();
         }
 
-        private Pedido(ICollection<PedidoItem> itens, Guid clienteId) : this(itens)
+        private Pedido(ICollection<PedidoItem> itens, Cliente cliente) : this(itens)
         {
-            ClienteId = clienteId;
+            Cliente = cliente;
+            ClienteId = cliente.Id;
             AssertionConcern.AssertArgumentNotEquals(Guid.Empty, ClienteId, "Codigo do cliente não foi informado!");
         }
 
@@ -152,7 +153,7 @@ namespace ControlePedido.Domain.Entities
         {
             public static Pedido Criar(ICollection<PedidoItem> itens, Cliente? cliente = null)
             {
-                return cliente is null ? new Pedido(itens) : new Pedido(itens, cliente.Id);
+                return cliente is null ? new Pedido(itens) : new Pedido(itens, cliente);
             }
         }
     }

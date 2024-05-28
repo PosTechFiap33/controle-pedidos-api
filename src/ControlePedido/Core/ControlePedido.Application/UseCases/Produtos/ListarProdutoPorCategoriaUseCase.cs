@@ -5,11 +5,6 @@ using ControlePedido.Domain.Enums;
 
 namespace ControlePedido.Application.UseCases.Produtos;
 
-public interface IListarProdutoPorCategoriaUseCase
-{
-    Task<ICollection<ProdutoDTO>> Executar(Categoria categoria);
-}
-
 public class ListarProdutoPorCategoriaUseCase : IListarProdutoPorCategoriaUseCase
 {
     private readonly IProdutoRepository _repository;
