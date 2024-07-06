@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controlepedido-api-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controlepedido-api-pod
+  template:
+    metadata:
+      labels:
+        app: controlepedido-api-pod
+    spec:
+      containers:
+      - name: controlepedido-api-pod
+        image: kenobirt/controlepedidos:v0.4
+        ports:
+          - containerPort: 443  # Porta HTTPS dentro do contêiner
+          - containerPort: 80   # Porta HTTP dentro do contêiner
+        env:
+          - name: DBConnection  # Nome da variável de ambiente para a conexão com o banco de dados
+            valueFrom:
+              configMapKeyRef:
+                name: controle-pedido-api-configmap  # Nome do ConfigMap que contém a configuração
+                key: DBConnection  # Chave dentro do ConfigMap que contém a string de conexão
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

@@ -1,3 +1,1 @@
-/.DS_Store
-src/Tests/ControlePedido.UnitTests/bin/
-src/Tests/ControlePedido.UnitTests/obj/
+infra/postgres-data

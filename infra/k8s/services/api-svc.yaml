@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: controle-pedido-api-svc
+spec:
+  selector:
+    app: controlepedido-api-pod  # Seleciona os pods que correspondem a essa label
+  ports:
+    - name: http            # Nome da porta para referência interna (HTTP)
+      protocol: TCP
+      port: 80              # Porta externa do serviço Kubernetes
+      targetPort: 80        # Porta no pod onde a sua aplicação está escutando
+      nodePort: 32000       # Porta que será exposta externamente (acima de 30000)
+    - name: https           # Nome da porta para referência interna (HTTPS)
+      protocol: TCP
+      port: 443             # Porta externa do serviço Kubernetes
+      targetPort: 443       # Porta em que a sua aplicação está escutando dentro do contêiner
+      nodePort: 32001       # Porta que será exposta externamente para HTTPS (acima de 30000)
+  type: NodePort            # Tipo de serviço, pode ser LoadBalancer, NodePort, ou ClusterIP

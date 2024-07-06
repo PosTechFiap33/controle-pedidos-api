@@ -1,6 +1,6 @@
-# ControlePedidos
+# Controle de Pedidos
 
-Este repositório foi criado para conter as atividades (Tech Challenge) da Pós Tech em Arquitetura de Software.
+Este repositório contém as atividades (Tech Challenge) da Pós Graduação em Arquitetura de Software.
 
 ## Autores
 
@@ -29,12 +29,35 @@ Para executar o projeto, siga estas etapas:
 
 Após levantar os containers, acesse a interface do Swagger para explorar a documentação das rotas da API. Para fazer isso, digite `https://localhost:5001/swagger` na barra de endereço do seu navegador.
 
-### Gerando Migrations
+## Gerando Migrations
 
-Para gerar migrações, siga estas instruções:
+Para gerar migrations, siga estas instruções:
 
 1. Navegue até a pasta `src/ControlePedido`.
-2. Execute o comando abaixo, substituindo `{NomeDaMigration}` pelo nome desejado para a migração:
+2. Execute o seguinte comando no terminal, substituindo `{NomeDaMigration}` pelo nome desejado para a migração:
 
 ```bash
 dotnet ef migrations add {NomeDaMigration} --project Adapter/Driven/ControlePedido.Infra -s Adapter/Driver/ControlePedido.Api -c ControlePedidoContext --verbose
+```
+
+## Gerando Relatórios de Testes
+
+Para gerar relatórios de testes com cobertura de código, siga estas instruções:
+
+1. Execute os testes com cobertura de código usando o seguinte comando no terminal:
+
+```bash
+dotnet test /p:CollectCoverage=true --verbose
+```
+
+Isso executará os testes e gerará um relatório de cobertura de código no formato padrão.
+
+Após a execução dos testes, gere o relatório de cobertura usando o seguinte comando no terminal:
+
+```bash
+reportgenerator -reports:coverage.opencover.xml -targetdir:Coveragereport -reporttypes:Html
+```
+
+Isso gerará um relatório HTML de cobertura de código no diretório Coveragereport.
+
+Abra o arquivo index.html dentro da pasta Coveragereport para visualizar o relatório de cobertura gerado.

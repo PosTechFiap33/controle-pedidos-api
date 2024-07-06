@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UseCases\" />
+    <None Remove="UseCases\Pedidos\" />
+    <None Remove="DTOs\" />
+    <None Remove="UseCases\Clientes\Interfaces\" />
+    <None Remove="UseCases\Pedidos\Interfaces\" />
+    <None Remove="UseCases\Produtos\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UseCases/Clientes/" />
+    <Folder Include="UseCases\" />
+    <Folder Include="UseCases\Pedidos\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="UseCases\Clientes\Interfaces\" />
+    <Folder Include="UseCases\Pedidos\Interfaces\" />
+    <Folder Include="UseCases\Produtos\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControlePedido.Domain\ControlePedido.Domain.csproj" />
+  </ItemGroup>
+</Project>
