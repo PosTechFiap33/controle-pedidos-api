@@ -25,9 +25,12 @@ spec:
             - name: POSTGRES_HOST_AUTH_METHOD
               value: trust
           resources:
+            requests:
+              cpu: "256m"
+              memory: "512Mi"
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              cpu: "512m"
+              memory: "1024Mi"
           ports:
             - containerPort: 5432
               name: postgres
