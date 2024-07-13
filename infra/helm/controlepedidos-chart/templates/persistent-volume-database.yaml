@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: controlepedido-database-pv
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: {{.Values.database.deployment.volume.storage}}   # Capacidade do volume
+  volumeMode: Filesystem  # Modo de volume (FileSystem ou Block)
+  accessModes:
+    - ReadWriteOnce  # Modo de acesso ao volume (ReadWriteOnce, ReadOnlyMany, ReadWriteMany)
+  persistentVolumeReclaimPolicy: Retain  # Política de recuperação do volume
+  local:
+    path: {{.Values.database.deployment.volume.localPath}} # Caminho no nó onde o armazenamento está localizado
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - {{.Values.database.deployment.volume.hostName}}

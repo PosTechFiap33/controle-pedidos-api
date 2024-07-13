@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: controlepedido-database-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # Modo de acesso ao volume
+  resources:
+    requests:
+      storage: 1Gi  # Capacidade solicitada
+  storageClassName: local-storage  # Classe de armazenamento (se estiver usando StorageClass)

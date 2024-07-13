@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DependencyInjections\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DependencyInjections\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\ControlePedido.Application\ControlePedido.Application.csproj" />
+    <ProjectReference Include="..\driven\ControlePedido.Infra\ControlePedido.Infra.csproj" />
+    <ProjectReference Include="..\driven\ControlePedido.Payment\ControlePedido.Payment.csproj" />
+  </ItemGroup>
+</Project>

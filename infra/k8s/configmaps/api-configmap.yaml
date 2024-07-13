@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: controle-pedido-api-configmap
+data:
+  DBConnection: |
+    Host=controle-pedido-database-svc;Port=5432;Pooling=true;Database=SGP;User Id=postgres;
