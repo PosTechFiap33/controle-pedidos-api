@@ -16,8 +16,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\ControlePedido.Application\ControlePedido.Application.csproj" />
-    <ProjectReference Include="..\Driven\ControlePedido.Infra\ControlePedido.Infra.csproj" />
-    <ProjectReference Include="..\Driven\ControlePedido.Payment\ControlePedido.Payment.csproj" />
+    <ProjectReference Include="..\..\core\ControlePedido.Application\ControlePedido.Application.csproj" />
+    <ProjectReference Include="..\driven\ControlePedido.Infra\ControlePedido.Infra.csproj" />
+    <ProjectReference Include="..\driven\ControlePedido.Payment\ControlePedido.Payment.csproj" />
   </ItemGroup>
 </Project>

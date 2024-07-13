@@ -39,8 +39,6 @@
     <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ControlePedido.IOC\ControlePedido.IOC.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <ProjectReference Include="..\..\ControlePedido.IOC\ControlePedido.IOC.csproj" />
   </ItemGroup>
 </Project>

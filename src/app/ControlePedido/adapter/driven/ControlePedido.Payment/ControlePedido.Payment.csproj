@@ -17,6 +17,6 @@
     <Folder Include="Providers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
+    <ProjectReference Include="..\..\..\core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
   </ItemGroup>
 </Project>

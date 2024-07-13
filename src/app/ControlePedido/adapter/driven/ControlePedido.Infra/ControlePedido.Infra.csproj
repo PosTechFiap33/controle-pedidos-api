@@ -28,9 +28,9 @@
     <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
+    <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
+    <ProjectReference Include="..\..\..\core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
   </ItemGroup>
 </Project>
