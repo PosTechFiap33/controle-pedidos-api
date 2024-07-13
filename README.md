@@ -61,3 +61,17 @@ reportgenerator -reports:coverage.opencover.xml -targetdir:Coveragereport -repor
 Isso gerará um relatório HTML de cobertura de código no diretório Coveragereport.
 
 Abra o arquivo index.html dentro da pasta Coveragereport para visualizar o relatório de cobertura gerado.
+
+## Utilizando o Kubernetes (K8S)
+
+### Helm
+
+Para instalar o projeto usando Helm, siga estes passos:
+
+1. Navegue até a pasta `infra/helm` do seu projeto.
+
+2. Execute o seguinte comando, especificando o diretório onde os arquivos do banco estão localizados. Por exemplo, se os arquivos do banco estão em `/Users/seu-usuario/banco-dados`:
+
+   ```bash
+   helm install meu-projeto ./controlepedidos-chart --set database.deployment.volume.localPath="/Users/seu-usuario/banco-dados"
+Certifique-se de substituir "/Users/seu-usuario/banco-dados" pelo caminho real onde os arquivos do banco de dados estão armazenados.

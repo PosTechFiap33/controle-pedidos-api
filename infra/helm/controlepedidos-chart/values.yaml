@@ -1,0 +1,55 @@
+# values.yaml
+api:
+  deployment:
+    name: controlepedido-api-pod
+    image:
+      repository: kenobirt/controlepedidos
+      tag: "v0.4"
+    replicas: 1
+  configmap:
+    name: controle-pedido-api-configmap
+    key: DBConnection
+    value: Host=controle-pedido-database-svc;Port=5432;Pooling=true;Database=SGP;User Id=postgres;
+  hpa:
+    name: controlepedido-api-hpa
+    minReplicas: 1
+    maxReplicas: 10
+    cpuAverageUtilization: 60
+    memoryAverageUtilization: 60
+  service:
+    name: controle-pedido-api-svc
+    http:
+      targetPort: 80
+      nodePort: 32000
+    https:
+      targetPort: 443
+      nodePort: 32001
+
+database:
+  deployment:
+    name: controlepedido-database-pod
+    image:
+      repository: postgres
+      tag: "12"
+    replicas: 1
+    volume:
+      name: postgres-storage
+      hostName: docker-desktop
+      localPath: /Users/flaviorobertoteixeira/Desktop/Desenvolvimento/dotnet/TechChallenge/ControlePedidos/infra/postgres-data
+      mountPath: /var/lib/postgresql/data
+      claimName: controlepedido-database-pvc
+      storage: 1Gi
+  hpa:
+    name: controlepedido-database-hpa
+    minReplicas: 1
+    maxReplicas: 10
+    cpuAverageUtilization: 60
+    memoryAverageUtilization: 60
+  configmap:
+    name: controle-pedido-database-configmap
+    key: DbName
+    value: SGP
+  service:
+    name: controle-pedido-database-svc
+    targetPort: 5432
+

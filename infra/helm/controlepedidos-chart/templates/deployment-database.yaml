@@ -1,0 +1,45 @@
+# templates/deployment1.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.database.deployment.name }}
+spec:
+  replicas: {{ .Values.database.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.database.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.database.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.database.deployment.name }}
+        image: {{ .Values.database.deployment.image.repository }}:{{ .Values.database.deployment.image.tag }}
+        env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Values.database.configmap.name}}
+                  key: {{.Values.database.configmap.key}}
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+        ports:
+          - containerPort: 5432
+            name: postgres
+        resources:
+          requests:
+            cpu: "256m"
+            memory: "512Mi"
+          limits:
+            cpu: "512m"
+            memory: "1024Mi"
+        volumeMounts:
+          - name: {{.Values.database.deployment.volume.name}}
+            mountPath: {{.Values.database.deployment.volume.mountPath}}
+      volumes:
+        - name: {{.Values.database.deployment.volume.name}}
+          persistentVolumeClaim: 
+            claimName: {{.Values.database.deployment.volume.claimName}}

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.api.configmap.name}}
+data:
+  DBConnection: {{.Values.api.configmap.value}}
+    
