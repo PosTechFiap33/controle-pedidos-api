@@ -4,7 +4,7 @@ api:
     name: controlepedido-api-pod
     image:
       repository: kenobirt/controlepedidos
-      tag: "v0.4"
+      tag: "latest"
     replicas: 1
   configmap:
     name: controle-pedido-api-configmap
