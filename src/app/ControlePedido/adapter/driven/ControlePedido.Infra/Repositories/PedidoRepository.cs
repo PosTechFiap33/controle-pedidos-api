@@ -37,9 +37,9 @@ namespace ControlePedido.Infra.Repositories
             else
                 _context.Entry(pedido.Pagamento).State = EntityState.Modified;
 
-            foreach(var status in pedido.Status)
+            foreach (var status in pedido.Status)
             {
-                if(status.PedidoId == Guid.Empty)
+                if (status.PedidoId == Guid.Empty)
                     _context.Entry(status).State = EntityState.Added;
                 else
                     _context.Entry(status).State = EntityState.Modified;
@@ -51,27 +51,45 @@ namespace ControlePedido.Infra.Repositories
         public Task<Pedido?> ConsultarPorId(Guid pedidoId)
         {
             return _context.Pedido
+                           .AsNoTracking()
                            .Include(p => p.Cliente)
                            .Include(p => p.Status)
                            .Include(p => p.Pagamento)
-                           .AsNoTracking()
                            .FirstOrDefaultAsync(p => p.Id == pedidoId);
         }
 
-        public async Task<ICollection<Pedido>> ListarPorStatus(StatusPedido? status)
+        public async Task<ICollection<Pedido>> ListarPedidos(StatusPedido? status)
         {
+            var statusDesejados = new List<StatusPedido> {
+                StatusPedido.PRONTO,
+                StatusPedido.EM_PREPARACAO,
+                StatusPedido.RECEBIDO
+             };
+
             IQueryable<Pedido> query = _context.Pedido
-                                               .Include(p => p.Itens)
-                                               .ThenInclude(i => i.Produto)
-                                               .Include(p => p.Cliente)
-                                               .Include(p => p.Status)
-                                               .AsNoTracking();
+                                         .AsNoTracking()
+                                         .Include(p => p.Itens)
+                                         .ThenInclude(i => i.Produto)
+                                         .Include(p => p.Cliente)
+                                         .Include(p => p.Status);
 
             if (status.HasValue)
             {
                 query = query.Where(p => p.Status
                              .OrderByDescending(s => s.DataHora)
                              .FirstOrDefault().Status == status);
+            }
+            else
+            {
+                query = query.Where(p =>
+                    statusDesejados.Contains(p.Status
+                        .OrderByDescending(s => s.DataHora)
+                        .FirstOrDefault().Status));
+
+                query = query.OrderBy(p =>
+                        p.Status.OrderByDescending(s => s.DataHora)
+                                .FirstOrDefault()
+                                .DataHora);
             }
 
             return await query.ToListAsync();

@@ -15,20 +15,18 @@ namespace ControlePedido.Api.Controllers
     public class PedidoController : MainController
     {
         /// <summary>
-        /// Obtém uma lista de pedidos, opcionalmente filtrada por status.
+        /// Obtém uma lista de pedidos.
         /// </summary>
         /// <remarks>
-        /// Retorna todos os pedidos se nenhum status for fornecido. Se um status for fornecido,
-        /// retorna apenas os pedidos com o status correspondente.
+        /// Retorna todos os pedidos ordenando pelo o status (Pronto > Em preparação > Recebido) do mais antigo para o mais novo 
         /// </remarks>
         /// <param name="useCase">A instância do caso de uso para listar os pedidos.</param>
-        /// <param name="status">O status pelo qual filtrar os pedidos (opcional).</param>
         /// <returns>Uma lista de pedidos.</returns>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ICollection<PedidoDTO>))]
         [ProducesResponseType(400, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(500, Type = typeof(ValidationProblemDetails))]
-        public async Task<ActionResult<ICollection<PedidoDTO>>> Get([FromServices] IListarPedidoPorStatusUseCase useCase, [FromQuery] StatusPedido? status)
+        public async Task<ActionResult<ICollection<PedidoDTO>>> Get([FromServices] IListarPedidoUseCase useCase, [FromQuery] StatusPedido? status)
         {
             var result = await useCase.Executar(status);
             return CustomResponse(result);

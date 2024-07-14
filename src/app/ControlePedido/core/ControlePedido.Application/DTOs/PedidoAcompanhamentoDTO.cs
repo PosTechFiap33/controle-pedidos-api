@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using ControlePedido.CrossCutting;
 using ControlePedido.Domain.Entities;
 using ControlePedido.Domain.Enums;
 
@@ -9,7 +10,7 @@ public class AcompanhamentoPedidoDTO
 {
     public Guid Id { get; private set; }
     public string? CpfCliente { get; private set; }
-    public StatusPedido Status { get; private set; }
+    public string Status { get; private set; }
 
     public AcompanhamentoPedidoDTO(Pedido pedido)
     {
@@ -20,6 +21,6 @@ public class AcompanhamentoPedidoDTO
         else
             CpfCliente = "Cpf não informado!";
 
-        Status = pedido.RetornarStatusAtual();
+        Status = pedido.RetornarStatusAtual().GetDescription();
     }
 }

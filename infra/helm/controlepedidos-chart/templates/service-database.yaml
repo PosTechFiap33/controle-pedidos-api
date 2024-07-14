@@ -6,7 +6,11 @@ spec:
   selector:
     app: {{.Values.database.deployment.name}} 
   ports:
-    - protocol: TCP
-      port: {{.Values.database.service.targetPort}}  
-      targetPort: {{.Values.database.service.targetPort}}  
-  type: ClusterIP
+    - name: database
+      protocol: TCP
+      port: {{ .Values.database.service.targetPort }}
+      targetPort: {{ .Values.database.service.targetPort }}
+      {{- if eq .Values.environment "local" }}
+      nodePort: {{ .Values.database.service.nodePort }}
+      {{- end }}
+  type: {{ if eq .Values.environment "local" }}NodePort{{ else }}ClusterIP{{ end }}

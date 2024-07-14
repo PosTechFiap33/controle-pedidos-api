@@ -60,7 +60,7 @@ namespace ControlePedido.Domain.Entities
         public ICollection<PedidoItem> Itens { get; private set; }
         public ICollection<PedidoStatus> Status { get; private set; }
         public PedidoPagamento Pagamento { get; private set; }
-        public Cliente Cliente { get; private set; }
+        public Cliente? Cliente { get; private set; }
 
         protected Pedido() { }
 
@@ -118,9 +118,18 @@ namespace ControlePedido.Domain.Entities
 
         public StatusPedido RetornarStatusAtual()
         {
+            return RetornarUltimoStatus().Status;
+        }
+
+        public string RetornarDataHora()
+        {
+            return RetornarUltimoStatus().DataHora.ToString();
+        }
+
+        private PedidoStatus RetornarUltimoStatus()
+        {
             return Status.OrderByDescending(p => p.DataHora)
-                         .FirstOrDefault()
-                         .Status;
+                         .FirstOrDefault();
         }
 
         private void AtualizarStatus(StatusPedido status)

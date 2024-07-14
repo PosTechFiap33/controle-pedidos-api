@@ -25,5 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlePedido.Domain\ControlePedido.Domain.csproj" />
+    <ProjectReference Include="..\..\common\ControlePedido.CrossCutting\ControlePedido.CrossCutting.csproj" />
   </ItemGroup>
 </Project>

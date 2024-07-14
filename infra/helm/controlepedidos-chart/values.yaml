@@ -1,4 +1,6 @@
 # values.yaml
+environment: production
+
 api:
   deployment:
     name: controlepedido-api-pod
@@ -52,4 +54,5 @@ database:
   service:
     name: controle-pedido-database-svc
     targetPort: 5432
+    nodePort: 32002
 
