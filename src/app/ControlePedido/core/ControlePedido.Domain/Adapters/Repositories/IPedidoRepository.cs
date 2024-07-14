@@ -12,7 +12,7 @@ namespace ControlePedido.Domain.Adapters.Repositories
         void Criar(Pedido pedido);
         void Atualizar(Pedido pedido);
         Task<Pedido?> ConsultarPorId(Guid pedidoId);
-        Task<ICollection<Pedido>> ListarPorStatus(StatusPedido? status);
+        Task<ICollection<Pedido>> ListarPedidos(StatusPedido? status);
     }
 }
 

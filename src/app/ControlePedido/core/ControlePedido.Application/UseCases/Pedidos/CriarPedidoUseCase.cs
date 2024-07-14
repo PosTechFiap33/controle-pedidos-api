@@ -36,7 +36,7 @@ namespace ControlePedido.Application.UseCases.Pedidos
                 var produto = await _produtoRepository.ConsultarPorId(itens.ProdutoId);
 
                 if (produto is null)
-                    throw new DomainException($"Não foi encontrado um pedido com id {itens.ProdutoId}");
+                    throw new DomainException($"Não foi encontrado um produto com id {itens.ProdutoId}");
 
                 itensPedido.Add(new PedidoItem(produto));
             };

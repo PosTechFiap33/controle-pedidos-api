@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
+using ControlePedido.CrossCutting;
 using ControlePedido.Domain.Entities;
-using ControlePedido.Domain.Enums;
 
 namespace ControlePedido.Application.DTOs
 {
@@ -11,7 +11,8 @@ namespace ControlePedido.Application.DTOs
         public decimal Valor { get; private set; }
         public string? CpfCliente { get; private set; }
         public IEnumerable<ProdutoDTO> Itens { get; private set; }
-        public StatusPedido Status { get; private set; }
+        public string Status { get; private set; }
+        public string DataHora { get; private set; }
 
         public PedidoDTO(Pedido pedido)
         {
@@ -19,7 +20,8 @@ namespace ControlePedido.Application.DTOs
             Valor = pedido.Valor;
             CpfCliente = pedido.Cliente?.Cpf?.Numero ?? "CPF não fornecido";
             Itens = pedido.Itens.Select(item => new ProdutoDTO(item.Produto)).ToList();
-            Status = pedido.RetornarStatusAtual();
+            Status = pedido.RetornarStatusAtual().GetDescription();
+            DataHora = pedido.RetornarDataHora();
         }
     }
 }
