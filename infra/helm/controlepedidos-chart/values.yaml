@@ -10,8 +10,15 @@ api:
     replicas: 1
   configmap:
     name: controle-pedido-api-configmap
-    key: DBConnection
-    value: Host=controle-pedido-database-svc;Port=5432;Pooling=true;Database=SGP;User Id=postgres;
+    database:
+      key: DBConnection
+      value: Host=controle-pedido-database-svc;Port=5432;Pooling=true;Database=SGP;User Id=postgres;
+    mercadoPagoIntegration:
+      key: MercadoPagoIntegration
+      token: ""
+      urlWebhook: "http://teste.com/mercado-pago/webhook"
+      userId: "1899463661"
+      externalPosId: "SUC001POS001"
   hpa:
     name: controlepedido-api-hpa
     minReplicas: 1

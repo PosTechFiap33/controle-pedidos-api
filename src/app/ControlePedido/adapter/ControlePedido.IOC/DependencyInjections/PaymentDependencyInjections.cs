@@ -1,5 +1,4 @@
-﻿using ControlePedido.Domain.Adapters.Providers;
-using ControlePedido.Payment.Services;
+﻿using ControlePedido.Payment.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ControlePedido.IOC.DependencyInjections
@@ -8,7 +7,7 @@ namespace ControlePedido.IOC.DependencyInjections
     {
         public static IServiceCollection RegisterPaymentServices(this IServiceCollection services)
         {
-            services.AddTransient<IPagamentoProvider, PagamentoMercadoPagoProvider>();
+            services.ConfigureHttpPayment();
             return services;
         }
     }
