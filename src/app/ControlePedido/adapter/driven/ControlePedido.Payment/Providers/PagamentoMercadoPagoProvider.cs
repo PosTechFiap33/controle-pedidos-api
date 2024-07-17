@@ -1,4 +1,4 @@
-﻿using System.Security.Principal;
+﻿using ControlePedido.Domain.Adapters.DTOs;
 using ControlePedido.Domain.Adapters.Providers;
 using ControlePedido.Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -47,9 +47,22 @@ namespace ControlePedido.Payment.Services
             }
         }
 
-        public Task<bool> ValidarTransacao(string codigoTransacao)
+        public async Task<PagamentoRealizadoDTO> ValidarTransacao(string idTransacao)
         {
-            return Task.FromResult(true);
+            try
+            {
+                var pagamento = await _mercadoPagoApi.ConsultarPagamento(_integration.Token, idTransacao);
+                return new PagamentoRealizadoDTO
+                {
+                    PedidoId = Guid.Parse(pagamento.PedidoId),
+                    DataPagamento = pagamento.DataHoraPagamento,
+                    CodigoTransacao = pagamento.TransacaoId.ToString()
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
