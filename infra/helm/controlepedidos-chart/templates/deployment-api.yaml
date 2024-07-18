@@ -17,19 +17,38 @@ spec:
       - name: {{ .Values.api.deployment.name }}
         image: {{ .Values.api.deployment.image.repository }}:{{ .Values.api.deployment.image.tag }}
         ports:
-          - containerPort: 443  # Porta HTTPS dentro do contêiner
           - containerPort: 80   # Porta HTTP dentro do contêiner
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 60  # Espera 60 segundos após o container ser iniciado
+          periodSeconds: 10        # Verifica a cada 10 segundos
+          timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
+          failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não saudável
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 60  # Espera 60 segundos após o container ser iniciado
+          periodSeconds: 10        # Verifica a cada 10 segundos
+          timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
+          failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não pronto
+        resources:
+          requests:
+            cpu: "512m"
+            memory: "1024Mi"
         env:
-          - name: {{.Values.api.configmap.database.key}}   # Nome da variável de ambiente para a conexão com o banco de dados
+          - name: DBConnection
             valueFrom:
               configMapKeyRef:
                 name: {{.Values.api.configmap.name}}  # Nome do ConfigMap que contém a configuração
-                key: {{.Values.api.configmap.database.key}}  # Chave dentro do ConfigMap que contém a string de conexão
-          - name: MERCADO_PAGO_TOKEN   # Nome da variável de ambiente para a conexão com o banco de dados
+                key: DBConnection  # Chave dentro do ConfigMap que contém a string de conexão
+          - name: MERCADO_PAGO_TOKEN
             valueFrom:
-              configMapKeyRef:
-                name: {{.Values.api.configmap.name}} 
-                key: MERCADO_PAGO_TOKEN  
+              secretKeyRef:
+                name: {{.Values.api.secret.name}} 
+                key: MERCADO_PAGO_TOKEN
           - name: MERCADO_PAGO_URL_WEBHOOK
             valueFrom:
               configMapKeyRef:

@@ -14,11 +14,8 @@ namespace ControlePedido.Api.Controllers
     [Route("api/[controller]")]
     public class ClienteController : MainController
     {
-        private readonly ILogger<ClienteController> _logger;
-        
-        public ClienteController(ILogger<ClienteController> logger)
+        public ClienteController(ILogger<ClienteController> logger) : base(logger)
         {
-            _logger = logger;
         }
 
         /// <summary>

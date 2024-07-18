@@ -4,7 +4,6 @@ metadata:
   name: {{.Values.api.configmap.name}}
 data:
   DBConnection: {{.Values.api.configmap.database.value}}
-  MERCADO_PAGO_TOKEN: "{{ .Values.api.configmap.mercadoPagoIntegration.token }}"
-  MERCADO_PAGO_URL_WEBHOOK: "{{ .Values.api.configmap.mercadoPagoIntegration.urlWebhook }}"
-  MERCADO_PAGO_USERID: "{{ .Values.api.configmap.mercadoPagoIntegration.userId }}"
-  MERCADO_PAGO_POSID: "{{ .Values.api.configmap.mercadoPagoIntegration.externalPosId }}"
+  MERCADO_PAGO_URL_WEBHOOK: "{{ .Values.mercadoPagoIntegration.urlWebhook }}"
+  MERCADO_PAGO_USERID: "{{ .Values.mercadoPagoIntegration.userId }}"
+  MERCADO_PAGO_POSID: "{{ .Values.mercadoPagoIntegration.externalPosId }}"

@@ -29,6 +29,26 @@ spec:
         ports:
           - containerPort: 5432
             name: postgres
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U postgres -d {{.Values.database.configmap.value}}
+          initialDelaySeconds: 30  # Espera 30 segundos após o container ser iniciado
+          periodSeconds: 10        # Verifica a cada 10 segundos
+          timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
+          failureThreshold: 3      # Número de falhas consecutivas para considerar o container como não saudável
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U postgres -d {{.Values.database.configmap.value}}
+          initialDelaySeconds: 10  # Espera 10 segundos após o container ser iniciado
+          periodSeconds: 10        # Verifica a cada 10 segundos
+          timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
+          failureThreshold: 3      # Número de falhas consecutivas para considerar o container como não pronto
         resources:
           requests:
             cpu: "256m"

@@ -14,6 +14,10 @@ namespace ControlePedido.Api.Controllers
     [Route("api/[controller]")]
     public class PagamentoController : MainController
 	{
+        public PagamentoController(ILogger<PagamentoController> logger) : base(logger)
+        {
+        }
+
         /// <summary>
         /// Realiza o pagamento de um pedido.
         /// </summary>

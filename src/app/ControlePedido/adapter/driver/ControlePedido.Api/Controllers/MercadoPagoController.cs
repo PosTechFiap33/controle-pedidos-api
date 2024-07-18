@@ -10,6 +10,9 @@ namespace ControlePedido.Api;
 [Route("api/[controller]")]
 public class MercadoPagoController : MainController
 {
+    public MercadoPagoController(ILogger<MercadoPagoController> logger) : base(logger)
+    {
+    }
 
     [HttpPost()]
     public async Task<IActionResult> Pagamento([FromBody] PagamentoMercadoPagoDTO pagamento, [FromServices] IPagarPedidoUseCase useCase)

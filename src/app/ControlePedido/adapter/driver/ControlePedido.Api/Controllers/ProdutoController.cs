@@ -14,6 +14,10 @@ namespace ControlePedido.Api.Controllers;
 [Route("api/[controller]")]
 public class ProdutoController : MainController
 {
+    public ProdutoController(ILogger<ProdutoController> logger) : base(logger)
+    {
+    }
+
     /// <summary>
     /// Cria um novo produto com base nos dados fornecidos.
     /// </summary>

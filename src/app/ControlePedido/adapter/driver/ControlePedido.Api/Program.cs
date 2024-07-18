@@ -1,6 +1,7 @@
 ﻿using ControlePedido.Api.Configuration;
 using ControlePedido.Api.Middleware;
 using ControlePedido.Infra.Configuration;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApiConfiguration(builder.Configuration);
 
 builder.Services.AddSwaggerConfiguration();
+
+builder.Services.AddHealthChecks()
+       .AddCheck("self", () => HealthCheckResult.Healthy())
+       .AddNpgSql(
+           connectionString: builder.Configuration["DbConnection"],
+           healthQuery: "SELECT 1;",
+           name: "postgres",
+           failureStatus: HealthStatus.Degraded);
 
 var app = builder.Build();
 
@@ -24,7 +33,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHealthChecks("/health");
+});
 
 app.Run();
 
