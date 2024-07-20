@@ -11,6 +11,7 @@ public class AcompanhamentoPedidoDTO
     public Guid Id { get; private set; }
     public string? CpfCliente { get; private set; }
     public string Status { get; private set; }
+    public PagamentoPedidoDTO DadosPagamento { get; set; }
 
     public AcompanhamentoPedidoDTO(Pedido pedido)
     {
@@ -20,6 +21,8 @@ public class AcompanhamentoPedidoDTO
             CpfCliente = pedido.Cliente.Cpf.Numero;
         else
             CpfCliente = "Cpf não informado!";
+
+        DadosPagamento = new PagamentoPedidoDTO(pedido.Pagamento);
 
         Status = pedido.RetornarStatusAtual().GetDescription();
     }

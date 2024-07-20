@@ -15,4 +15,7 @@ public class Dados
 {
     [JsonPropertyName("id")]
     public string TransacaoId { get; set; }
+
+    [JsonPropertyName("transaction_amount")]
+    public decimal Valor { get; set; }
 }

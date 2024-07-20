@@ -1,8 +1,10 @@
 ﻿using ControlePedido.Domain.Adapters.DTOs;
 using ControlePedido.Domain.Adapters.Providers;
 using ControlePedido.Domain.Entities;
+using ControlePedido.Payment.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Refit;
 
 namespace ControlePedido.Payment.Services
 {
@@ -23,13 +25,13 @@ namespace ControlePedido.Payment.Services
 
         public async Task<string> GerarQRCodePagamento(Pedido pedido)
         {
+            var mensagemErro = "Não foi possível comunicar com o sistema de pagamento para gerar o qrcode, utilize a rota de pagamento manual para prosseguir com seu pedido!";
+
             try
             {
-                _logger.LogInformation("recuperando token...");
+                _logger.LogInformation("Iniciando o processo de geração de QR Code para o pedido: " + pedido.Id);
 
                 var token = _integration.Token;
-
-                _logger.LogInformation(token);
 
                 var urlWebhook = _integration.UrlWebhook;
 
@@ -39,11 +41,19 @@ namespace ControlePedido.Payment.Services
 
                 var result = await _mercadoPagoApi.GerarQrCode(token, pedidoDto, userId, _integration.ExternalPosId);
 
+                _logger.LogInformation("QR Code gerado com sucesso para o pedido: " + pedido.Id);
+
                 return result.QrData;
+            }
+            catch (ApiException apiEx)
+            {
+                _logger.LogApiError(apiEx, "Erro de API ao comunicar com o Mercado Pago");
+                return mensagemErro;
             }
             catch (Exception e)
             {
-                throw e;
+                _logger.LogError(e, "Ocorreu um erro ao comunicar com o Mercado Pago: {ErrorMessage}.", e.Message);
+                return mensagemErro;
             }
         }
 
@@ -59,11 +69,13 @@ namespace ControlePedido.Payment.Services
                     CodigoTransacao = pagamento.TransacaoId.ToString()
                 };
             }
-            catch (Exception e)
+            catch (ApiException apiEx)
             {
-                throw e;
+                _logger.LogApiError(apiEx, "Erro de API ao comunicar com o Mercado Pago");
+                throw new Exception("Ocorreu um erro interno ao comunicar com o sistema de pagamento!");
             }
         }
     }
 }
+
 

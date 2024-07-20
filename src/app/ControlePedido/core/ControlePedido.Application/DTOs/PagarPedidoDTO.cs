@@ -6,10 +6,12 @@ namespace ControlePedido.Application.DTOs
     public class PagarPedidoDTO
 	{
         public string CodigoTransacao { get; private set; }
+        public decimal ValorPago {get; private set; }
         
-        public PagarPedidoDTO(string codigoTransacao)
+        public PagarPedidoDTO(string codigoTransacao, decimal valorPago)
         {
             CodigoTransacao = codigoTransacao;
+            ValorPago = valorPago;
         }
 	}
 }

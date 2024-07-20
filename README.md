@@ -33,7 +33,7 @@ Após levantar os containers, acesse a interface do Swagger para explorar a docu
 
 Para gerar migrations, siga estas instruções:
 
-1. Navegue até a pasta `src/ControlePedido`.
+1. Navegue até a pasta `src/app/ControlePedido`.
 2. Execute o seguinte comando no terminal, substituindo `{NomeDaMigration}` pelo nome desejado para a migração:
 
 ```bash
