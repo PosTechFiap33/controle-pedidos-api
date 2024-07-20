@@ -15,6 +15,7 @@ namespace ControlePedido.IOC.DependencyInjections
             services.AddTransient<IListarProdutoPorCategoriaUseCase, ListarProdutoPorCategoriaUseCase>();
             services.AddTransient<ICriarPedidoUseCase, CriarPedidoUseCase>();
             services.AddTransient<IPagarPedidoUseCase, PagarPedidoUseCase>();
+            services.AddTransient<IPagarPedidoManualmenteUseCase, PagarPedidoManualmenteUseCase>();
             services.AddTransient<IListarPedidoUseCase, ListarPedidoUseCase>();
             services.AddTransient<IIniciarPreparoPedidoUseCase, IniciarPreparoPedidoUseCase>();
             services.AddTransient<IFinalizarPreparoPedidoUseCase, FinalizarPreparoPedidoUseCase>();

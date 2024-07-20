@@ -5,8 +5,11 @@ namespace ControlePedido.Domain.Base
     public class DomainException : Exception
 	{
 		public DomainException(string message) : base(message) { }
-
-		public DomainException(string message, Exception innerException) : base(message, innerException) { }
 	}
+
+    public class IntegrationExceptions : Exception
+    {
+        public IntegrationExceptions(string message) : base(message) { }
+    }
 }
 

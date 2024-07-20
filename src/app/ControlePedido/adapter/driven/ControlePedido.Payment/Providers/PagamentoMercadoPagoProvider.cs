@@ -1,5 +1,6 @@
 ﻿using ControlePedido.Domain.Adapters.DTOs;
 using ControlePedido.Domain.Adapters.Providers;
+using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Entities;
 using ControlePedido.Payment.Extensions;
 using Microsoft.Extensions.Logging;
@@ -59,6 +60,8 @@ namespace ControlePedido.Payment.Services
 
         public async Task<PagamentoRealizadoDTO> ValidarTransacao(string idTransacao)
         {
+            var mensagemErro = "Ocorreu um erro interno ao comunicar com o sistema de pagamento!";
+
             try
             {
                 var pagamento = await _mercadoPagoApi.ConsultarPagamento(_integration.Token, idTransacao);
@@ -72,7 +75,12 @@ namespace ControlePedido.Payment.Services
             catch (ApiException apiEx)
             {
                 _logger.LogApiError(apiEx, "Erro de API ao comunicar com o Mercado Pago");
-                throw new Exception("Ocorreu um erro interno ao comunicar com o sistema de pagamento!");
+                throw new IntegrationExceptions(mensagemErro);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ocorreu um erro ao comunicar com o Mercado Pago: {ErrorMessage}.", e.Message);
+                throw new IntegrationExceptions(mensagemErro);
             }
         }
     }

@@ -51,7 +51,6 @@ namespace ControlePedido.Infra.Repositories
         public Task<Pedido?> ConsultarPorId(Guid pedidoId)
         {
             return _context.Pedido
-                           .AsNoTracking()
                            .Include(p => p.Cliente)
                            .Include(p => p.Status)
                            .Include(p => p.Pagamento)
