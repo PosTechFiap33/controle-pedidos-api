@@ -1,22 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Class1.cs" />
-    <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Providers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Providers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Refit" Version="7.1.2" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="Class1.cs" />
+        <Compile Remove="Configuration\DependencyInjectionConfiguration.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Providers\" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Providers\" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\core\ControlePedido.Domain\ControlePedido.Domain.csproj" />
+    </ItemGroup>
 </Project>

@@ -9,10 +9,11 @@ namespace ControlePedido.Infra
     {
         public ControlePedidoContext(DbContextOptions options) : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
-
+        
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Produto> Produto { get; set; }
         public DbSet<Pedido> Pedido { get; set; }

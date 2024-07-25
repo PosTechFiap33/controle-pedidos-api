@@ -31,11 +31,13 @@ namespace ControlePedido.Domain.Entities
         public DateTime DataHoraPagamento { get; private set; }
         public string CodigoTransacao { get; private set; }
         public Pedido Pedido { get; private set; }
+        public decimal ValorPago { get; private set; }
 
-        public PedidoPagamento(string codigoTransacao)
+        public PedidoPagamento(string codigoTransacao, DateTime dataHoraPagamento, decimal valorPago)
         {
-            DataHoraPagamento = DateTime.UtcNow;
+            DataHoraPagamento = dataHoraPagamento;
             CodigoTransacao = codigoTransacao;
+            ValorPago = valorPago;
         }
     }
 
@@ -81,13 +83,15 @@ namespace ControlePedido.Domain.Entities
             AssertionConcern.AssertArgumentNotEquals(Guid.Empty, ClienteId, "Codigo do cliente não foi informado!");
         }
 
-        public void Pagar(string codigoTransacao)
+        public void Pagar(string codigoTransacao, DateTime dataPagamento, decimal valorPago)
         {
             AssertionConcern.AssertArgumentNotEmpty(codigoTransacao, "O código da transação não pode ser vazio!");
+            AssertionConcern.AssertArgumentNotEmpty(dataPagamento, "A data do pagamento não pode estar vazia!");
+            AssertionConcern.AssertGratherThanOrEqualValue(valorPago, Valor, "O valor pago não pode ser menor que o valor do pedido!");
 
             if (Pagamento is null)
             {
-                Pagamento = new PedidoPagamento(codigoTransacao);
+                Pagamento = new PedidoPagamento(codigoTransacao, dataPagamento, valorPago);
                 AtualizarStatus(StatusPedido.RECEBIDO);
             }
         }

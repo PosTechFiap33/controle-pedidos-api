@@ -1,18 +1,32 @@
 ﻿using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControlePedido.Api.Base
 {
     public abstract class MainController : ControllerBase
-	{
+    {
         protected ICollection<string> Erros = new List<string>();
+        protected readonly ILogger _logger;
+
+        protected MainController(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         protected ActionResult CustomResponse(object? result = null, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
-            if (OperacaoValida())
-                return StatusCode((int)statusCode, result);
+            ObjectResult response;
 
-            return BadRequest(RecuperarErros());
+            if (OperacaoValida())
+                response = StatusCode((int)statusCode, result);
+            else
+                response = BadRequest(RecuperarErros());
+
+            string serializedValue = JsonSerializer.Serialize(response.Value);
+            _logger.LogInformation("Resposta devolvida para o client - Status: {StatusCode} - Value: {Value}", response.StatusCode, serializedValue);
+
+            return response;
         }
 
         protected bool OperacaoValida()

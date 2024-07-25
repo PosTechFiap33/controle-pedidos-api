@@ -14,6 +14,10 @@ namespace ControlePedido.Api.Controllers
     [Route("api/[controller]")]
     public class PedidoController : MainController
     {
+        public PedidoController(ILogger<PedidoController> logger) : base(logger)
+        {
+        }
+
         /// <summary>
         /// Obtém uma lista de pedidos.
         /// </summary>

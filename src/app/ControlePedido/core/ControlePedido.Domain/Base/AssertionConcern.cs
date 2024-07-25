@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ControlePedido.Domain.Base
 {
@@ -37,9 +38,17 @@ namespace ControlePedido.Domain.Base
             }
         }
 
-        public static void AssertGratherThanValue(decimal value, int minimum, string message)
+        public static void AssertGratherThanValue(decimal value, decimal minimum, string message)
         {
             if (value <= minimum)
+            {
+                throw new DomainException(message);
+            }
+        }
+
+        public static void AssertGratherThanOrEqualValue(decimal value, decimal minimum, string message)
+        {
+            if (value < minimum)
             {
                 throw new DomainException(message);
             }
@@ -76,6 +85,14 @@ namespace ControlePedido.Domain.Base
         public static void AssertArgumentNotEmpty(string stringValue, string message)
         {
             if (stringValue == null || string.IsNullOrEmpty(stringValue))
+            {
+                throw new DomainException(message);
+            }
+        }
+
+        public static void AssertArgumentNotEmpty(DateTime dateValue, string message)
+        {
+            if (DateTime.MinValue >= dateValue)
             {
                 throw new DomainException(message);
             }

@@ -79,7 +79,7 @@ namespace ControlePedido.Domain.Testes
 
             var pedido = PedidoFactory.Criar(itens, cliente);
 
-            var excecao = Assert.Throws<DomainException>(() => pedido.Pagar(codigoTransacao));
+            var excecao = Assert.Throws<DomainException>(() => pedido.Pagar(codigoTransacao, DateTime.UtcNow, 30));
 
             Assert.Equal("O código da transação não pode ser vazio!", excecao.Message);
             Assert.Equal(StatusPedido.CRIADO, pedido.RetornarStatusAtual());
@@ -91,7 +91,7 @@ namespace ControlePedido.Domain.Testes
             var codigoTransacao = "123456";
             var pedido = PedidoFactory.Criar(itens, cliente);
 
-            pedido.Pagar(codigoTransacao);
+            pedido.Pagar(codigoTransacao, DateTime.UtcNow, 30);
 
             Assert.NotNull(pedido.Pagamento);
             Assert.Equal(codigoTransacao, pedido.Pagamento.CodigoTransacao);
@@ -108,11 +108,11 @@ namespace ControlePedido.Domain.Testes
             var pedido = PedidoFactory.Criar(itens, cliente);
 
             for (var i = 0; i < quantidadeExecucao; i++)
-                pedido.Pagar(codigoTransacao);
+                pedido.Pagar(codigoTransacao, DateTime.UtcNow, 30);
 
             Assert.Equal(2, pedido.Status.Count);
         }
-        
+
         [Fact(DisplayName = "Deve retornar mensagem de pagamento nao realizado ao iniciar o preparo")]
         public void IniciarPreparo_DeveRetornarMensagemPagamentoNaoRealizado()
         {
@@ -128,7 +128,7 @@ namespace ControlePedido.Domain.Testes
         public void IniciarPreparo_DeveAtualizarStatusParaEmPreparacaoQuandoPagamentoRealizado()
         {
             var pedido = PedidoFactory.Criar(itens, cliente);
-            pedido.Pagar("123456");
+            pedido.Pagar("123456", DateTime.UtcNow, 30);
 
             pedido.IniciarPreparo();
 
@@ -139,7 +139,7 @@ namespace ControlePedido.Domain.Testes
         public void FinalizarPreparo_DeveRetornarMensagemPreparoPedidoNaoFinalizado()
         {
             var pedido = PedidoFactory.Criar(itens, cliente);
-            pedido.Pagar("123456");
+            pedido.Pagar("123456", DateTime.UtcNow, 30);
 
             var excecao = Assert.Throws<DomainException>(() => pedido.FinalizarPreparo());
 
@@ -151,7 +151,7 @@ namespace ControlePedido.Domain.Testes
         public void FinalizarPreparo_DeveAtualizarStatusParaProntoQuandoPreparoIniciado()
         {
             var pedido = PedidoFactory.Criar(itens, cliente);
-            pedido.Pagar("123456");
+            pedido.Pagar("123456", DateTime.UtcNow, 50);
             pedido.IniciarPreparo();
 
             pedido.FinalizarPreparo();
@@ -163,8 +163,8 @@ namespace ControlePedido.Domain.Testes
         public void Finalizar_DeveRetornarMensagemPreparoNaoFinalizado()
         {
             var pedido = PedidoFactory.Criar(itens, cliente);
-            pedido.Pagar("123456");
-          
+            pedido.Pagar("123456", DateTime.UtcNow, 60);
+
             var excecao = Assert.Throws<DomainException>(() => pedido.Finalizar());
 
             Assert.Equal("Não foi possível finalizar o pedido pois o preparo não foi finalizado!", excecao.Message);
@@ -175,7 +175,7 @@ namespace ControlePedido.Domain.Testes
         public void Finalizar_DeveAtualizarStatusParaFinalizadoQuandoPreparoFinalizado()
         {
             var pedido = PedidoFactory.Criar(itens, cliente);
-            pedido.Pagar("123456");
+            pedido.Pagar("123456", DateTime.UtcNow, 50);
             pedido.IniciarPreparo();
             pedido.FinalizarPreparo();
 

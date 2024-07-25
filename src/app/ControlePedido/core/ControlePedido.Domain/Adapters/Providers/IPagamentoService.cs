@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
+using ControlePedido.Domain.Adapters.DTOs;
 using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Domain.Adapters.Providers
 {
     public interface IPagamentoProvider
 	{
-		string GerarQRCodePagamento(Pedido pedido);
-        Task<bool> ValidarTransacao(string codigoTransacao);
+		Task<string> GerarQRCodePagamento(Pedido pedido);
+        Task<PagamentoRealizadoDTO> ValidarTransacao(string codigoTransacao);
     }
 }
 

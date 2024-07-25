@@ -16,6 +16,9 @@ public class PedidoPagamentoMapping : IEntityTypeConfiguration<PedidoPagamento>
         builder.Property(p => p.DataHoraPagamento)
                .IsRequired();
 
+        builder.Property(p => p.ValorPago)
+               .IsRequired();
+
         builder.ToTable("Pagamentos");
     }
 }

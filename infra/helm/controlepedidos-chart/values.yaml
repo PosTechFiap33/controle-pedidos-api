@@ -1,6 +1,13 @@
 # values.yaml
 environment: production
 
+mercadoPagoIntegration:
+  key: MercadoPagoIntegration
+  token: ""
+  urlWebhook: "https://bd4f-179-192-179-124.ngrok-free.app/api/mercadoPago"
+  userId: "1899463661"
+  externalPosId: "SUC001POS001"
+      
 api:
   deployment:
     name: controlepedido-api-pod
@@ -8,10 +15,12 @@ api:
       repository: kenobirt/controlepedidos
       tag: "latest"
     replicas: 1
+  secret:
+    name: controle-pedido-api-secret
   configmap:
     name: controle-pedido-api-configmap
-    key: DBConnection
-    value: Host=controle-pedido-database-svc;Port=5432;Pooling=true;Database=SGP;User Id=postgres;
+    database:
+      value: Host=controle-pedido-database-svc;Port=5432;Pooling=true;Database=SGP;User Id=postgres;
   hpa:
     name: controlepedido-api-hpa
     minReplicas: 1

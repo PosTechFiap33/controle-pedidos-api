@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json.Nodes;
 using ControlePedido.Api.Base;
 using ControlePedido.Application.DTOs;
 using ControlePedido.Application.UseCases.Pedidos;
@@ -13,8 +14,12 @@ namespace ControlePedido.Api.Controllers
     [Route("api/[controller]")]
     public class PagamentoController : MainController
 	{
+        public PagamentoController(ILogger<PagamentoController> logger) : base(logger)
+        {
+        }
+
         /// <summary>
-        /// Realiza o pagamento de um pedido.
+        /// Realiza o pagamento manual de um pedido.
         /// </summary>
         /// <param name="pagamento">Dados do pagamento realizado.</param>
         /// <returns>Pagamento efetivado.</returns>
@@ -22,7 +27,7 @@ namespace ControlePedido.Api.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(500, Type = typeof(ValidationProblemDetails))]
-        public async Task<IActionResult> Post([FromServices] IPagarPedidoUseCase useCase, [FromBody] PagarPedidoDTO pagarPedido)
+        public async Task<IActionResult> Post([FromServices] IPagarPedidoManualmenteUseCase useCase, [FromBody] PagarPedidoManualDTO pagarPedido)
         {
             await useCase.Executar(pagarPedido);
             return CustomResponse(statusCode: HttpStatusCode.Created);

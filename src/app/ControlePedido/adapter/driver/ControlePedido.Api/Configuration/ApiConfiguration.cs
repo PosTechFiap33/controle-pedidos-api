@@ -3,6 +3,7 @@ using ControlePedido.Api.Middleware;
 using ControlePedido.IOC.DependencyInjections;
 using ControlePedido.Infra.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using ControlePedido.Payment;
 
 namespace ControlePedido.Api.Configuration
 {
@@ -23,6 +24,8 @@ namespace ControlePedido.Api.Configuration
             services.AddDatabaseConfiguration(configuration);
 
             services.RegisterRepositories();
+
+            services.Configure<MercadoPagoIntegration>(configuration.GetSection("MercadoPagoIntegration"));
 
             services.RegisterPaymentServices();
 

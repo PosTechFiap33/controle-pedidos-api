@@ -45,7 +45,7 @@ namespace ControlePedido.Application.UseCases.Pedidos
 
             await SalvarPedido(pedido);
 
-            var qrCode = _pagamentoProvider.GerarQRCodePagamento(pedido);
+            var qrCode = await _pagamentoProvider.GerarQRCodePagamento(pedido);
 
             return new PedidoCriadoDTO(pedido, qrCode);
         }

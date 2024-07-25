@@ -6,8 +6,8 @@ using ControlePedido.Domain.Base;
 namespace ControlePedido.Application.UseCases.Pedidos
 {
     public class PagarPedidoUseCase : IPagarPedidoUseCase
-	{
-		private readonly IPedidoRepository _repository;
+    {
+        private readonly IPedidoRepository _repository;
         private readonly IPagamentoProvider _pagamentoProvider;
 
         public PagarPedidoUseCase(IPedidoRepository repository,
@@ -19,19 +19,17 @@ namespace ControlePedido.Application.UseCases.Pedidos
 
         public async Task Executar(PagarPedidoDTO pagarPedido)
         {
-            var pedido = await _repository.ConsultarPorId(pagarPedido.PedidoId);
+            var pagamentoRealizado = await _pagamentoProvider.ValidarTransacao(pagarPedido.CodigoTransacao);
 
-            //TODO - colocar validacao pra verificar se pedido ja esta pago.
+            if (pagamentoRealizado == null)
+                throw new DomainException("Não foi encontrado um pagamento para o código de transação informado!");
+
+            var pedido = await _repository.ConsultarPorId(pagamentoRealizado.PedidoId);
 
             if (pedido is null)
                 throw new DomainException("Não foi encontrado um pedido com o código informado!");
 
-            var codigoTranscacaoValido = await _pagamentoProvider.ValidarTransacao(pagarPedido.CodigoTransacao);
-
-            if (!codigoTranscacaoValido)
-                throw new DomainException("O código de transação informado não está válido!");
-
-            pedido.Pagar(pagarPedido.CodigoTransacao);
+            pedido.Pagar(pagarPedido.CodigoTransacao, pagamentoRealizado.DataPagamento, pagarPedido.ValorPago);
 
             _repository.Atualizar(pedido);
 
