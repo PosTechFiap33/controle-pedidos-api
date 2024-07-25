@@ -19,6 +19,7 @@ Este repositório contém as atividades (Tech Challenge) da Pós Graduação em 
 
 - [Domain Event Storming](https://www.figma.com/board/fHGDc1i4RxCmrrsPomCD4E/Domain-Event-Storming-Tech-Challenge?node-id=0%3A1&t=TI5wBxdhle65UPSn-1): Este link direciona para o Domain Event Storming, fornecendo uma visão geral visual do projeto.
 - [Linguagem Ubíqua](https://endurable-saguaro-cb6.notion.site/Tech-challenge-819953d402a349e88708f15e7589e03a): A Linguagem Ubíqua é essencial para o entendimento compartilhado entre todas as partes interessadas, fornecendo um glossário de termos comuns utilizados no projeto.
+- Collection: A collection do postman está localizada na pasta docs/collection
 
 ## Execução do Projeto
 

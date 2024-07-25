@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "66e74cd3-d180-4aba-a916-6ceb410f471d",
+		"name": "ControlePedidos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3291654"
+	},
+	"item": [
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Cliente",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Teste\",\n  \"email\": \"teste4@example.com\",\n  \"cpf\": \"39017695013\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Cliente",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Cliente"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contém as rotas para listar e cadastrar novo cliente"
+		},
+		{
+			"name": "Webhook",
+			"item": [
+				{
+					"name": "MercadoPago",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"string\",\n  \"data\": {\n    \"id\": \"string\",\n    \"transaction_amount\": 0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/MercadoPago",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"MercadoPago"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contém o webhook utilizado para receber a confirmação de pagamento emitida pelo mercado pago"
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Pagar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"codigoTransacao\": \"pagamento manual\", //codigo de identificação do pagamento (qualquer valor)\n  \"valorPago\": {{pedido.valor}},\n  \"pedidoId\": \"{{pedido.id}}\" //código de identificação do pedido\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Pagamento",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pagamento"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contém a rota para pagamento manual de um pedio, em caso de contingência (provedor de pagamento estar fora)."
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "ListarPorCategoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Produto?categoria={{categoria.Lanche}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Produto"
+							],
+							"query": [
+								{
+									"key": "categoria",
+									"value": "{{categoria.Lanche}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Pudim\",\n  \"preco\": 18,\n  \"descricao\": \"Delicioso pudim cremoso\",\n  \"categoria\": {{categoria.Sobremesa}},\n  \"nomeImagem\": \"pudim\",\n  \"urlImagem\": \"string\",\n  \"extensaoImagem\": \"png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Produto",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Produto"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contém as rotas para cadastrar e consultar um produto\n\nA consulta é realizada de acordo com a categoria do produto:\n\n1: Lanche; 2: Acompanhamento; 3: Bebida; 4: Sobremesa;"
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Pedido?status={{StatusPedido.SemStatus}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "{{StatusPedido.SemStatus}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Acompanhar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Capturar o token da resposta",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"pedido.id\", jsonData.id);",
+									"pm.environment.set(\"pedido.valor\", jsonData.valor);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Pedido/{{pedido.id}}/acompanhar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido",
+								"{{pedido.id}}",
+								"acompanhar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CriarComCpf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Capturar o token da resposta",
+									"var jsonData = pm.response.json();",
+									"var id = jsonData.pedido.id;",
+									"",
+									"pm.environment.set(\"pedido.id\", id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cpfCliente\": \"25752623057\",\n  \"itens\": [\n    {\n      \"produtoId\": \"526c55ac-d9cf-403c-a736-0d54438d193f\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Pedido",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CriarSemCpf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Capturar o token da resposta",
+									"var jsonData = pm.response.json();",
+									"var id = jsonData.pedido.id;",
+									"",
+									"pm.environment.set(\"pedido.id\", id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"itens\": [\n    {\n      \"produtoId\": \"526c55ac-d9cf-403c-a736-0d54438d193f\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Pedido",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "IniciarPreparo",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Pedido/{{pedido.id}}/iniciar-preparo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido",
+								"{{pedido.id}}",
+								"iniciar-preparo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FinalizarPreparo",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Pedido/{{pedido.id}}/finalizar-preparo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido",
+								"{{pedido.id}}",
+								"finalizar-preparo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EntregarPedido",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Pedido/{{pedido.id}}/entregar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Pedido",
+								"{{pedido.id}}",
+								"entregar"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contém as rotas para :\n\n## Listar os pedidos\n\nSerá exibida a lista de pedido ordenados na seguinte regra:\n\n1. Pronto > Em Preparação > Recebido;\n    \n2. Pedidos mais antigos primeiro e mais novos depois;\n    \n3. Pedidos com status Finalizado não devem aparecer na lista.\n    \n\nCaso seja informado o status (1: Criado; 2: Recebido; 3: Em preparacao; 4: Pronto; 5: Finalizado;) no query parameter os pedidos serão retornados conforme a categoria indicada\n\n## Cadastrar o pedido\n\n## Acompanhar um pedido\n\n## Iniciar o preparo do pedido\n\n## Finalizar o preparo do pedido\n\n## Entregar o pedido"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5243"
+		},
+		{
+			"key": "categoria.Lanche",
+			"value": "1"
+		},
+		{
+			"key": "categoria.Acompanhamento",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "categoria.Bebida",
+			"value": "3",
+			"type": "string"
+		},
+		{
+			"key": "categoria.Sobremesa",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "StatusPedido.Criado",
+			"value": "1"
+		},
+		{
+			"key": "StatusPedido.Recebido",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "StatusPedido.EmPreparacao",
+			"value": "3",
+			"type": "string"
+		},
+		{
+			"key": "StatusPedido.Pronto",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "StatusPedido.Finalizado",
+			"value": "5",
+			"type": "string"
+		},
+		{
+			"key": "StatusPedido.SemStatus",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "pedidoId",
+			"value": "03412ed8-ed11-4f5d-b31b-b34dc281fecf"
+		}
+	]
+}

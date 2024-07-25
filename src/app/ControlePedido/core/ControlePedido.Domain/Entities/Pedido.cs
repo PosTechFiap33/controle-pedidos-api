@@ -87,7 +87,7 @@ namespace ControlePedido.Domain.Entities
         {
             AssertionConcern.AssertArgumentNotEmpty(codigoTransacao, "O código da transação não pode ser vazio!");
             AssertionConcern.AssertArgumentNotEmpty(dataPagamento, "A data do pagamento não pode estar vazia!");
-            AssertionConcern.AssertGratherThanValue(valorPago, Valor, "O valor pago não pode ser menor que o valor do pedido!");
+            AssertionConcern.AssertGratherThanOrEqualValue(valorPago, Valor, "O valor pago não pode ser menor que o valor do pedido!");
 
             if (Pagamento is null)
             {

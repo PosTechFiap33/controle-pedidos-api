@@ -46,6 +46,14 @@ namespace ControlePedido.Domain.Base
             }
         }
 
+        public static void AssertGratherThanOrEqualValue(decimal value, decimal minimum, string message)
+        {
+            if (value < minimum)
+            {
+                throw new DomainException(message);
+            }
+        }
+
         public static void AssertArgumentExactlyLength(string stringValue, int length, string message)
         {
             int result = stringValue.Trim().Length;
