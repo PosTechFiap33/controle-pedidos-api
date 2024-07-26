@@ -2,19 +2,21 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Adapter/Driver/ControlePedido.Api/ControlePedido.Api.csproj", "Adapter/Driver/ControlePedido.Api/"]
-COPY ["Adapter/ControlePedido.IOC/ControlePedido.IOC.csproj", "Adapter/ControlePedido.IOC/"]
-COPY ["Core/ControlePedido.Application/ControlePedido.Application.csproj", "Core/ControlePedido.Application/"]
-COPY ["Core/ControlePedido.Domain/ControlePedido.Domain.csproj", "Core/ControlePedido.Domain/"]
-COPY ["Adapter/Driven/ControlePedido.Payment/ControlePedido.Payment.csproj", "Adapter/Driven/ControlePedido.Payment/"]
-COPY ["Adapter/Driven/ControlePedido.Infra/ControlePedido.Infra.csproj", "Adapter/Driven/ControlePedido.Infra/"]
-RUN dotnet restore "Adapter/Driver/ControlePedido.Api/ControlePedido.Api.csproj"
+COPY ["adapter/driver/ControlePedido.Api/ControlePedido.Api.csproj", "adapter/driver/ControlePedido.Api/"]
+COPY ["adapter/ControlePedido.IOC/ControlePedido.IOC.csproj", "adapter/ControlePedido.IOC/"]
+COPY ["core/ControlePedido.Application/ControlePedido.Application.csproj", "core/ControlePedido.Application/"]
+COPY ["core/ControlePedido.Domain/ControlePedido.Domain.csproj", "core/ControlePedido.Domain/"]
+COPY ["common/ControlePedido.CrossCutting/ControlePedido.CrossCutting.csproj", "common/ControlePedido.CrossCutting/"]
+COPY ["adapter/driven/ControlePedido.Infra/ControlePedido.Infra.csproj", "adapter/driven/ControlePedido.Infra/"]
+COPY ["adapter/driven/ControlePedido.Payment/ControlePedido.Payment.csproj", "adapter/driven/ControlePedido.Payment/"]
+RUN dotnet restore "adapter/driver/ControlePedido.Api/ControlePedido.Api.csproj"
 COPY . .
-WORKDIR "/src/Adapter/Driver/ControlePedido.Api"
+WORKDIR "/src/adapter/driver/ControlePedido.Api"
 RUN dotnet build "ControlePedido.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

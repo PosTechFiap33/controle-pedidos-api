@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{9D30F2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.CrossCutting", "common\ControlePedido.CrossCutting\ControlePedido.CrossCutting.csproj", "{26FB913B-5D7E-408C-8EDD-2D6065820470}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlePedido.IntegrationTests", "tests\ControlePedido.IntegrationTests\ControlePedido.IntegrationTests.csproj", "{6257C19E-7B94-4376-B141-51E21CB16127}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{26FB913B-5D7E-408C-8EDD-2D6065820470}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26FB913B-5D7E-408C-8EDD-2D6065820470}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26FB913B-5D7E-408C-8EDD-2D6065820470}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6257C19E-7B94-4376-B141-51E21CB16127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6257C19E-7B94-4376-B141-51E21CB16127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6257C19E-7B94-4376-B141-51E21CB16127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6257C19E-7B94-4376-B141-51E21CB16127}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{0D9F9E0C-2458-4BA0-A202-67F15016D827} = {AF5F9EF8-5F60-409E-B67A-418FCC99CA29}
 		{63A21522-8EDB-49CA-BFCD-BED48353188E} = {664DC37E-73AF-4133-948B-C919FD4965B4}
 		{26FB913B-5D7E-408C-8EDD-2D6065820470} = {9D30F22D-40BF-4F71-A961-A8BCD324390E}
+		{6257C19E-7B94-4376-B141-51E21CB16127} = {664DC37E-73AF-4133-948B-C919FD4965B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B4FA748-A259-4F84-977A-31927FA7588B}
