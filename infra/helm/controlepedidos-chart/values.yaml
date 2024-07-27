@@ -7,13 +7,12 @@ mercadoPagoIntegration:
   urlWebhook: "https://bd4f-179-192-179-124.ngrok-free.app/api/mercadoPago"
   userId: "1899463661"
   externalPosId: "SUC001POS001"
-      
+
 api:
   deployment:
     name: controlepedido-api-pod
     image:
       repository: kenobirt/controlepedidos
-      tag: "latest"
     replicas: 1
   secret:
     name: controle-pedido-api-secret

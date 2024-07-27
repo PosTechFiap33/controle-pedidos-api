@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.api.deployment.name }}
-        image: {{ .Values.api.deployment.image.repository }}:{{ .Values.api.deployment.image.tag }}
+        image: "{{ .Values.api.deployment.image.repository }}:{{ if eq .Values.environment "production" }}latest{{ else }}dev{{ end }}"
         ports:
           - containerPort: 80   # Porta HTTP dentro do contêiner
         livenessProbe:
