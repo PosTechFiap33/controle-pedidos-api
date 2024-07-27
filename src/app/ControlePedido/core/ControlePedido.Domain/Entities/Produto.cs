@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Enums;
 using ControlePedido.Domain.ValueObjects;

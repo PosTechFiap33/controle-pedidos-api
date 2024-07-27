@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 using ControlePedido.CrossCutting;
 using ControlePedido.Domain.Entities;
 
@@ -7,12 +8,27 @@ namespace ControlePedido.Application.DTOs
     [DisplayName("Pedido")]
     public class PedidoDTO
     {
-        public Guid Id { get; private set; }
-        public decimal Valor { get; private set; }
-        public string? CpfCliente { get; private set; }
-        public IEnumerable<ProdutoDTO> Itens { get; private set; }
-        public string Status { get; private set; }
-        public string DataHora { get; private set; }
+        [JsonPropertyName("id")]
+        public Guid Id { get; set; }
+
+        [JsonPropertyName("valor")]
+        public decimal Valor { get; set; }
+
+        [JsonPropertyName("cpfCliente")]
+        public string? CpfCliente { get; set; }
+
+        [JsonPropertyName("itens")]
+        public IEnumerable<ProdutoDTO> Itens { get; set; }
+
+        [JsonPropertyName("status")]
+        public string Status { get; set; }
+
+        [JsonPropertyName("dataHora")]
+        public string DataHora { get; set; }
+
+        public PedidoDTO()
+        {
+        }
 
         public PedidoDTO(Pedido pedido)
         {

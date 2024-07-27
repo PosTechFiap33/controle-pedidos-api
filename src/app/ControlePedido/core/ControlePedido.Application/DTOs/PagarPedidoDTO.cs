@@ -1,12 +1,16 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace ControlePedido.Application.DTOs
 {
     [DisplayName("PagarPedido")]
     public class PagarPedidoDTO
     {
-        public string CodigoTransacao { get; private set; }
-        public decimal ValorPago { get; private set; }
+        [JsonPropertyName("codigoTransacao")]
+        public string CodigoTransacao { get; set; }
+
+        [JsonPropertyName("valorPago")]
+        public decimal ValorPago { get; set; }
 
         public PagarPedidoDTO(string codigoTransacao, decimal valorPago)
         {
@@ -18,7 +22,8 @@ namespace ControlePedido.Application.DTOs
     [DisplayName("PagarPedidoManual")]
     public class PagarPedidoManualDTO : PagarPedidoDTO
     {
-        public Guid PedidoId { get; private set; }
+        [JsonPropertyName("pedidoId")]
+        public Guid PedidoId { get; set; }
 
         public PagarPedidoManualDTO(Guid pedidoId, string codigoTransacao, decimal valorPago) : base(codigoTransacao, valorPago)
         {
