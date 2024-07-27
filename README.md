@@ -22,6 +22,9 @@ Este repositório contém as atividades (Tech Challenge) da Pós Graduação em 
 - [Requisitos de Negócio](https://equable-windflower-bb5.notion.site/Documento-de-Requisitos-de-Neg-cio-15fe11dde1a8412e81d13facedf6f227): Os Requisitos de Negócio são essenciais para o entendimento do escopo do projeto, fornecendo uma visão geral dos requisitos funcionais e não funcionais.
 - Collection: A collection do postman está localizada na pasta docs/collection
 
+## Desenho de Arquitetura
+![Arquitetura do Sistema](./docs/architecture/architecture.png)
+
 ## Execução do Projeto
 
 Para executar o projeto, siga estas etapas:
