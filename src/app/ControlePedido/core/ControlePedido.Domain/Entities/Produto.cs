@@ -27,17 +27,6 @@ namespace ControlePedido.Domain.Entities
             ValidateEntity();
         }
 
-        public Produto(Guid id, string nome, decimal preco, Categoria categoria, string descricao, Imagem imagem)
-        {
-            Id = id;
-            Nome = nome;
-            Preco = preco;
-            Categoria = categoria;
-            Descricao = descricao;
-            Imagem = imagem;
-            ValidateEntity();
-        }
-
         private void ValidateEntity(){
             AssertionConcern.AssertArgumentNotEmpty(Nome, "O Nome não pode estar vazio!");
             AssertionConcern.AssertArgumentLength(Nome, 100, "O nome não pode ultrapassar 100 caracters!");

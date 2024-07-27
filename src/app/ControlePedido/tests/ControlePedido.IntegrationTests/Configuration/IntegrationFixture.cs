@@ -1,8 +1,7 @@
-﻿using ControlePedido.Domain.Entities;
-using ControlePedido.Domain.Enums;
-using ControlePedido.Domain.ValueObjects;
+﻿using System.Text.Json;
 using ControlePedido.Infra;
-using Microsoft.AspNetCore.Hosting;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +12,7 @@ public class IntegrationTestFixture : IDisposable
 {
     public WebApplicationFactory<Program> Factory { get; }
     public HttpClient Client { get; }
+    public ControlePedidoContext context { get; private set; }
 
     public IntegrationTestFixture()
     {
@@ -39,19 +39,26 @@ public class IntegrationTestFixture : IDisposable
                     });
 
                     var serviceProvider = services.BuildServiceProvider();
-                    using (var scope = serviceProvider.CreateScope())
-                    {
-                        {
-                            var scopedServices = scope.ServiceProvider;
-                            var db = scopedServices.GetRequiredService<ControlePedidoContext>();
-                            db.Database.EnsureCreated();
-                            await SeedDatabase(db);
-                        }
-                    }
+
+                    context = serviceProvider.GetService<ControlePedidoContext>();
+                    context.Database.EnsureCreated();
+                    await SeedDatabase();
                 });
             });
 
         Client = Factory.CreateClient();
+    }
+
+    public async Task TestarRequisicaoComErro(HttpResponseMessage response, List<string> erros)
+    {
+        var dados = await response.Content.ReadAsStringAsync();
+        var errorDetail = JsonSerializer.Deserialize<ValidationProblemDetails>(dados);
+
+        new ValidationProblemDetails(new Dictionary<string, string[]> {
+                { "Mensagens", erros.ToArray() }
+            });
+
+        errorDetail.Errors["Mensagens"].Should().BeEquivalentTo(erros);
     }
 
     public void Dispose()
@@ -60,17 +67,10 @@ public class IntegrationTestFixture : IDisposable
         Factory.Dispose();
     }
 
-    private async Task SeedDatabase(ControlePedidoContext db)
+    private async Task SeedDatabase()
     {
-        db.Cliente.Add(new Cliente("Teste", "71935710010", "teste@testecadastrado.com"));
-
-        if (!db.Produto.Any(e => e.Id == new Guid("d0c1c104-4b17-4b24-8195-94d9b1a10b0b")))
-            db.Produto.Add(new Produto(new Guid("d0c1c104-4b17-4b24-8195-94d9b1a10b0b"), "Hamburguer", 30m, Categoria.Lanche, "Delicioso Hamburguer artesanal.", new Imagem("http://img.com/hamburguer", "jpg", "hamburguer")));
-
-        if (!db.Produto.Any(e => e.Id == new Guid("1d93f2c3-f3a7-4e1e-b0d6-3568d2e96e43")))
-            db.Produto.Add(new Produto(new Guid("1d93f2c3-f3a7-4e1e-b0d6-3568d2e96e43"), "Sunday", 20m, Categoria.Sobremesa, "Deliciosa sobremesa", new Imagem("http://img.com/sunday", "jpg", "sunday")));
-
-        await db.SaveChangesAsync();
+        context.Cliente.Add(new Domain.Entities.Cliente("Teste", "71935710010", "teste@testecadastrado.com"));
+        await context.SaveChangesAsync();
     }
 }
 
