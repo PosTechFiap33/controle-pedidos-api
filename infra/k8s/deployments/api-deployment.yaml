@@ -16,18 +16,18 @@ spec:
       - name: controlepedido-api-pod
         image: kenobirt/controlepedidos:latest
         ports:
-          - containerPort: 443  # Porta HTTPS dentro do contêiner
-          - containerPort: 80   # Porta HTTP dentro do contêiner
+        - containerPort: 443 # Porta HTTPS dentro do contêiner
+        - containerPort: 80 # Porta HTTP dentro do contêiner
         env:
-          - name: DBConnection  # Nome da variável de ambiente para a conexão com o banco de dados
-            valueFrom:
-              configMapKeyRef:
-                name: controle-pedido-api-configmap  # Nome do ConfigMap que contém a configuração
-                key: DBConnection  # Chave dentro do ConfigMap que contém a string de conexão
+        - name: DBConnection # Nome da variável de ambiente para a conexão com o banco de dados
+          valueFrom:
+            configMapKeyRef:
+              name: controle-pedido-api-configmap # Nome do ConfigMap que contém a configuração
+              key: DBConnection # Chave dentro do ConfigMap que contém a string de conexão
         resources:
-            requests:
-              cpu: "256m"
-              memory: "512Mi"
-            limits:
-              cpu: "512m"
-              memory: "1024Mi"
+          requests:
+            cpu: "256m"
+            memory: "512Mi"
+          limits:
+            cpu: "512m"
+            memory: "1024Mi"

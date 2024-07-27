@@ -1,9 +1,9 @@
-name: Publish Docker Image to development
+name: Publish Docker Image to production
 
 on:
   push:
     branches:
-    - develop
+    - main
 
 permissions:
   pull-requests: write
@@ -40,11 +40,11 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPONAME }}:dev .
+      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPONAME }}:latest .
       working-directory: src/app # Path to your Dockerfile
 
     - name: Push Docker image to Docker Hub
-      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPONAME }}:dev
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPONAME }}:latest
 
     - name: pull-request
       uses: repo-sync/pull-request@v2
