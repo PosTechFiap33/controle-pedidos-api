@@ -16,11 +16,13 @@ namespace ControlePedido.IntegrationTests.Features
         private readonly HttpClient _client;
         private readonly CriarClienteDTO _cliente;
         private HttpResponseMessage _response;
+        private IntegrationTestFixture _fixture;
 
         public CadastrarClienteStepDefinitions(IntegrationTestFixture fixture)
         {
             _client = fixture.Client;
             _cliente = new CriarClienteDTO();
+            _fixture = fixture;
         }
 
         [Given(@"que eu iforme o nome ""(.*)""")]
@@ -79,18 +81,7 @@ namespace ControlePedido.IntegrationTests.Features
         public async Task Givenamensagemdeerrodeveser(string erro)
         {
             var erros = new List<string> { erro };
-
-            var dados = await _response.Content.ReadAsStringAsync();
-            var errorDetail = JsonSerializer.Deserialize<ValidationProblemDetails>(dados);
-
-            new ValidationProblemDetails(new Dictionary<string, string[]> {
-                { "Mensagens", erros.ToArray() }
-            });
-
-            errorDetail.Errors["Mensagens"].Should().BeEquivalentTo(erros);
+            await _fixture.TestarRequisicaoComErro(_response, erros);
         }
-        
-
     }
 }
-

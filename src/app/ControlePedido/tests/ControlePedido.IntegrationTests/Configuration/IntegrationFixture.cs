@@ -1,9 +1,10 @@
-﻿using ControlePedido.Infra;
-using Microsoft.AspNetCore.Hosting;
+﻿using System.Text.Json;
+using ControlePedido.Infra;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ControlePedido.IntegrationTests;
 
@@ -11,6 +12,7 @@ public class IntegrationTestFixture : IDisposable
 {
     public WebApplicationFactory<Program> Factory { get; }
     public HttpClient Client { get; }
+    public ControlePedidoContext context { get; private set; }
 
     public IntegrationTestFixture()
     {
@@ -37,19 +39,26 @@ public class IntegrationTestFixture : IDisposable
                     });
 
                     var serviceProvider = services.BuildServiceProvider();
-                    using (var scope = serviceProvider.CreateScope())
-                    {
-                        {
-                            var scopedServices = scope.ServiceProvider;
-                            var db = scopedServices.GetRequiredService<ControlePedidoContext>();
-                            db.Database.EnsureCreated();
-                            await SeedDatabase(db);
-                        }
-                    }
+
+                    context = serviceProvider.GetService<ControlePedidoContext>();
+                    context.Database.EnsureCreated();
+                    await SeedDatabase();
                 });
             });
 
         Client = Factory.CreateClient();
+    }
+
+    public async Task TestarRequisicaoComErro(HttpResponseMessage response, List<string> erros)
+    {
+        var dados = await response.Content.ReadAsStringAsync();
+        var errorDetail = JsonSerializer.Deserialize<ValidationProblemDetails>(dados);
+
+        new ValidationProblemDetails(new Dictionary<string, string[]> {
+                { "Mensagens", erros.ToArray() }
+            });
+
+        errorDetail.Errors["Mensagens"].Should().BeEquivalentTo(erros);
     }
 
     public void Dispose()
@@ -58,10 +67,10 @@ public class IntegrationTestFixture : IDisposable
         Factory.Dispose();
     }
 
-    private async Task SeedDatabase(ControlePedidoContext db)
+    private async Task SeedDatabase()
     {
-        db.Cliente.Add(new Domain.Entities.Cliente("Teste", "71935710010", "teste@testecadastrado.com"));
-        await db.SaveChangesAsync();
+        context.Cliente.Add(new Domain.Entities.Cliente("Teste", "71935710010", "teste@testecadastrado.com"));
+        await context.SaveChangesAsync();
     }
 }
 

@@ -1,12 +1,22 @@
-﻿using ControlePedido.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Application;
 
 public class PagamentoPedidoDTO
 {
-    public string CodigoTransacao { get; private set; }
-    public DateTime DataHoraPagamento { get; private set; }
-    public decimal ValorPago { get; private set; }
+    [JsonPropertyName("codigoTransacao")]
+    public string CodigoTransacao { get; set; }
+
+    [JsonPropertyName("dataHoraPagamento")]
+    public DateTime DataHoraPagamento { get; set; }
+
+    [JsonPropertyName("valorPago")]
+    public decimal ValorPago { get; set; }
+
+    public PagamentoPedidoDTO()
+    {
+    }
 
     public PagamentoPedidoDTO(PedidoPagamento pagamento)
     {
