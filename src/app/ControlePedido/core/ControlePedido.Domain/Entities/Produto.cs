@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ControlePedido.Domain.Base;
 using ControlePedido.Domain.Enums;
 using ControlePedido.Domain.ValueObjects;
@@ -18,6 +19,17 @@ namespace ControlePedido.Domain.Entities
 
         public Produto(string nome, decimal preco, Categoria categoria, string descricao, Imagem imagem)
         {
+            Nome = nome;
+            Preco = preco;
+            Categoria = categoria;
+            Descricao = descricao;
+            Imagem = imagem;
+            ValidateEntity();
+        }
+
+        public Produto(Guid id, string nome, decimal preco, Categoria categoria, string descricao, Imagem imagem)
+        {
+            Id = id;
             Nome = nome;
             Preco = preco;
             Categoria = categoria;

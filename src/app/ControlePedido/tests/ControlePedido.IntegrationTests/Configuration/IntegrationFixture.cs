@@ -1,9 +1,11 @@
-﻿using ControlePedido.Infra;
+﻿using ControlePedido.Domain.Entities;
+using ControlePedido.Domain.Enums;
+using ControlePedido.Domain.ValueObjects;
+using ControlePedido.Infra;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ControlePedido.IntegrationTests;
 
@@ -60,7 +62,14 @@ public class IntegrationTestFixture : IDisposable
 
     private async Task SeedDatabase(ControlePedidoContext db)
     {
-        db.Cliente.Add(new Domain.Entities.Cliente("Teste", "71935710010", "teste@testecadastrado.com"));
+        db.Cliente.Add(new Cliente("Teste", "71935710010", "teste@testecadastrado.com"));
+
+        if (!db.Produto.Any(e => e.Id == new Guid("d0c1c104-4b17-4b24-8195-94d9b1a10b0b")))
+            db.Produto.Add(new Produto(new Guid("d0c1c104-4b17-4b24-8195-94d9b1a10b0b"), "Hamburguer", 30m, Categoria.Lanche, "Delicioso Hamburguer artesanal.", new Imagem("http://img.com/hamburguer", "jpg", "hamburguer")));
+
+        if (!db.Produto.Any(e => e.Id == new Guid("1d93f2c3-f3a7-4e1e-b0d6-3568d2e96e43")))
+            db.Produto.Add(new Produto(new Guid("1d93f2c3-f3a7-4e1e-b0d6-3568d2e96e43"), "Sunday", 20m, Categoria.Sobremesa, "Deliciosa sobremesa", new Imagem("http://img.com/sunday", "jpg", "sunday")));
+
         await db.SaveChangesAsync();
     }
 }

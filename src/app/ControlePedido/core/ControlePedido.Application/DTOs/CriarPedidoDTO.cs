@@ -17,6 +17,11 @@ namespace ControlePedido.Application.DTOs
 
         [Required(ErrorMessage = "Campo {0} obrigatorio")]
         public ICollection<PedidoItemDTO> Itens { get; set; }
+
+        public CriarPedidoDTO()
+        {
+            Itens = new List<PedidoItemDTO>();
+        }
     }
 }
 

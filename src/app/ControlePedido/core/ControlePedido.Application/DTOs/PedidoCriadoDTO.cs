@@ -1,19 +1,27 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 using ControlePedido.Domain.Entities;
 
 namespace ControlePedido.Application.DTOs
 {
     [DisplayName("PedidoCriado")]
     public class PedidoCriadoDTO
-	{
-        public PedidoDTO Pedido { get; private set; }
-        public string QRCodePagamento { get; private set; }
+    {
+        [JsonPropertyName("pedido")]
+        public PedidoDTO Pedido { get; set; }
+
+        [JsonPropertyName("qrCodePagamento")]
+        public string QRCodePagamento { get; set; }
+
+        public PedidoCriadoDTO()
+        {
+        }
 
         public PedidoCriadoDTO(Pedido pedido, string qRCodePagamento)
         {
             Pedido = new PedidoDTO(pedido);
             QRCodePagamento = qRCodePagamento;
         }
-	}
+    }
 }
 
