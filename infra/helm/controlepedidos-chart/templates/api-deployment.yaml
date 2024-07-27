@@ -22,7 +22,7 @@ spec:
           httpGet:
             path: /health
             port: 80
-          initialDelaySeconds: 60  # Espera 60 segundos após o container ser iniciado
+          initialDelaySeconds: 30  # Espera 60 segundos após o container ser iniciado
           periodSeconds: 10        # Verifica a cada 10 segundos
           timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
           failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não saudável
@@ -30,14 +30,17 @@ spec:
           httpGet:
             path: /health
             port: 80
-          initialDelaySeconds: 60  # Espera 60 segundos após o container ser iniciado
+          initialDelaySeconds: 30  # Espera 30 segundos após o container ser iniciado
           periodSeconds: 10        # Verifica a cada 10 segundos
           timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
           failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não pronto
         resources:
           requests:
-            cpu: "512m"
+            cpu: "1024m"
             memory: "1024Mi"
+          limits:
+            cpu: "2048m"  
+            memory: "2048Mi" 
         env:
           - name: DBConnection
             valueFrom:
