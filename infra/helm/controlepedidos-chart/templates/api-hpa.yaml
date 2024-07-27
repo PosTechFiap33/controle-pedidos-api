@@ -5,8 +5,8 @@ metadata:
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
-    kind: Deployment  # Tipo de recurso que está sendo escalado
-    name: {{.Values.api.deployment.name}}  # Nome do deployment que você deseja escalar
+    kind: Deployment
+    name: {{.Values.api.deployment.name}}
   minReplicas: {{.Values.api.hpa.minReplicas}}  # Número mínimo de réplicas
   maxReplicas: {{.Values.api.hpa.maxReplicas}}  # Número máximo de réplicas
   metrics:
@@ -15,10 +15,10 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{.Values.api.hpa.cpuAverageUtilization}}  # Alvo de utilização de CPU (60%)
+          averageUtilization: {{.Values.api.hpa.cpuAverageUtilization}}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{.Values.api.hpa.memoryAverageUtilization}}  # Alvo de utilização de memória (60%)
+          averageUtilization: {{.Values.api.hpa.memoryAverageUtilization}}

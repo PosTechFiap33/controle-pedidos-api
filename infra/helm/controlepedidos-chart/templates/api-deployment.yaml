@@ -15,29 +15,32 @@ spec:
     spec:
       containers:
       - name: {{ .Values.api.deployment.name }}
-        image: {{ .Values.api.deployment.image.repository }}:{{ .Values.api.deployment.image.tag }}
+        image: "{{ .Values.api.deployment.image.repository }}:{{ if eq .Values.environment "production" }}latest{{ else }}dev{{ end }}"
         ports:
           - containerPort: 80   # Porta HTTP dentro do contêiner
         livenessProbe:
           httpGet:
             path: /health
             port: 80
-          initialDelaySeconds: 60  # Espera 60 segundos após o container ser iniciado
-          periodSeconds: 10        # Verifica a cada 10 segundos
-          timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
-          failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não saudável
+          initialDelaySeconds: 30  
+          periodSeconds: 10        
+          timeoutSeconds: 5        
+          failureThreshold: 2     
         readinessProbe:
           httpGet:
             path: /health
             port: 80
-          initialDelaySeconds: 60  # Espera 60 segundos após o container ser iniciado
+          initialDelaySeconds: 10  
           periodSeconds: 10        # Verifica a cada 10 segundos
           timeoutSeconds: 5        # Tempo limite de 5 segundos para a resposta
           failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não pronto
         resources:
           requests:
-            cpu: "512m"
+            cpu: "1024m"
             memory: "1024Mi"
+          limits:
+            cpu: "1024m"
+            memory: "2048Mi"
         env:
           - name: DBConnection
             valueFrom:

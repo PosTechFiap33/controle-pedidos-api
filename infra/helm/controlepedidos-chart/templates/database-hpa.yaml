@@ -7,18 +7,18 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{.Values.database.deployment.name}}
-  minReplicas: {{.Values.api.hpa.minReplicas}}  # Número mínimo de réplicas
-  maxReplicas: {{.Values.api.hpa.maxReplicas}}  # Número máximo de réplicas
+  minReplicas: {{.Values.database.hpa.minReplicas}}  # Número mínimo de réplicas
+  maxReplicas: {{.Values.database.hpa.maxReplicas}}  # Número máximo de réplicas
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{.Values.api.hpa.cpuAverageUtilization}}
+          averageUtilization: {{.Values.database.hpa.cpuAverageUtilization}}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{.Values.api.hpa.memoryAverageUtilization}}
+          averageUtilization: {{.Values.database.hpa.memoryAverageUtilization}}
