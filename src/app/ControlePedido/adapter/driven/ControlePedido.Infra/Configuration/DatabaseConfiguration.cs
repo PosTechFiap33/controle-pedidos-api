@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace ControlePedido.Infra.Configuration
 {
@@ -15,8 +16,16 @@ namespace ControlePedido.Infra.Configuration
 
         public static void ConfigureMigrationDatabase(this IServiceProvider services)
         {
-            var dbContext = services.GetRequiredService<ControlePedidoContext>();
-            dbContext.Database.Migrate();
+            try
+            {
+                var dbContext = services.GetRequiredService<ControlePedidoContext>();
+                dbContext.Database.Migrate();
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger>();
+                logger.LogError(ex, "Ocorreu um erro ao executar a migration do banco de dados!");
+            }
         }
     }
 }

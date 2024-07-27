@@ -51,11 +51,11 @@ spec:
           failureThreshold: 3      # Número de falhas consecutivas para considerar o container como não pronto
         resources:
           requests:
-            cpu: "256m"
+            cpu: "512m"
             memory: "512Mi"
           limits:
-            cpu: "512m"
-            memory: "1024Mi"
+            cpu: "1024m"
+            memory: "2048Mi"
         volumeMounts:
           - name: {{.Values.database.deployment.volume.name}}
             mountPath: {{.Values.database.deployment.volume.mountPath}}
