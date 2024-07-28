@@ -36,10 +36,10 @@ spec:
           failureThreshold: 2      # Número de falhas consecutivas para considerar o container como não pronto
         resources:
           requests:
-            cpu: "1024m"
-            memory: "1024Mi"
+            cpu: "512m"
+            memory: "512Mi"
           limits:
-            cpu: "1024m"
+            cpu: "2048m"
             memory: "2048Mi"
         env:
           - name: DBConnection

@@ -14,6 +14,7 @@ Este repositório contém as atividades (Tech Challenge) da Pós Graduação em 
 - Swagger
 - PostgreSQL
 - Docker
+- Kubernets
 
 ## Documentação
 
@@ -25,11 +26,39 @@ Este repositório contém as atividades (Tech Challenge) da Pós Graduação em 
 ## Desenho de Arquitetura
 ![Arquitetura do Sistema](./docs/architecture/architecture.png)
 
-## Execução do Projeto
+## Execução do projeto com Kubernetes (K8S)
+
+### Helm
+
+Para instalar o projeto usando Helm, siga estes passos:
+
+1. Navegue até a pasta `infra/helm` do seu projeto.
+
+2. Execute o seguinte comando, especificando o diretório onde os arquivos do banco estão localizados. Por exemplo, se os arquivos do banco estão em `/Users/seu-usuario/banco-dados`:
+
+   ```bash
+   helm install controle-pedidos ./controlepedidos-chart --set database.deployment.volume.localPath="/Users/seu-usuario/banco-dados"
+   ```
+Certifique-se de substituir "/Users/seu-usuario/banco-dados" pelo caminho real onde os arquivos do banco de dados estão armazenados isso é importante pois internamente é utilizado o volume com storage class do tipo local-storage.
+
+#### Integração com mercado pago: 
+Para que a integração com o mercado pago ocorra é necessário especificar o token de integração  em base64 e a url de webhook ao levantar a aplicação para isso execute o seguinte comando:
+
+   ```bash
+   helm install controle-pedidos ./controlepedidos-chart --set database.deployment.volume.localPath="/Users/seu-usuario/banco-dados" --set mercadoPagoIntegration.token="Bearer TOKEN" --set mercadoPagoIntegration.urlWebhook="URL webhook"
+   ```
+
+Caso o token seja de uma conta de teste é importante destacar que ele só funcionará de segunda a sexta, pois o mercado pago desliga os servidores de testes aos finais de semana.
+
+Caso queira disponibilizar um dns na cloud apontando pra sua url local você pode utilizar o [ngrok](https://ngrok.com/docs), com essa ferramenta é possível validar a integração do webhook sem a necessidade de pulicar o projeto em alguma cloud.
+
+Após levantar a aplicação acesse a url `http://localhost:32000/swagger`
+
+## Execução do projeto utilizando docker
 
 Para executar o projeto, siga estas etapas:
 
-1. Navegue até a pasta `src/ControlePedido`.
+1. Navegue até a pasta `src/app/ControlePedido`.
 2. Execute o comando `docker compose up -d`.
 
 Após levantar os containers, acesse a interface do Swagger para explorar a documentação das rotas da API. Para fazer isso, digite `https://localhost:5001/swagger` na barra de endereço do seu navegador.
@@ -67,16 +96,3 @@ Isso gerará um relatório HTML de cobertura de código no diretório Coveragere
 
 Abra o arquivo index.html dentro da pasta Coveragereport para visualizar o relatório de cobertura gerado.
 
-## Utilizando o Kubernetes (K8S)
-
-### Helm
-
-Para instalar o projeto usando Helm, siga estes passos:
-
-1. Navegue até a pasta `infra/helm` do seu projeto.
-
-2. Execute o seguinte comando, especificando o diretório onde os arquivos do banco estão localizados. Por exemplo, se os arquivos do banco estão em `/Users/seu-usuario/banco-dados`:
-
-   ```bash
-   helm install meu-projeto ./controlepedidos-chart --set database.deployment.volume.localPath="/Users/seu-usuario/banco-dados"
-Certifique-se de substituir "/Users/seu-usuario/banco-dados" pelo caminho real onde os arquivos do banco de dados estão armazenados.

@@ -24,8 +24,8 @@ api:
     name: controlepedido-api-hpa
     minReplicas: 1
     maxReplicas: 10
-    cpuAverageUtilization: 40
-    memoryAverageUtilization: 60
+    cpuAverageUtilization: 50
+    memoryAverageUtilization: 50
   service:
     name: controle-pedido-api-svc
     http:

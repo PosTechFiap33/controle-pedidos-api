@@ -269,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cpfCliente\": \"25752623057\",\n  \"itens\": [\n    {\n      \"produtoId\": \"526c55ac-d9cf-403c-a736-0d54438d193f\"\n    }\n  ]\n}",
+							"raw": "{\n  \"cpfCliente\": \"25752623057\",\n  \"itens\": [\n    {\n      \"produtoId\": \"eb222a9d-e491-4f44-b9e7-a070ef7a4f12\"\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -312,7 +312,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"itens\": [\n    {\n      \"produtoId\": \"526c55ac-d9cf-403c-a736-0d54438d193f\"\n    }\n  ]\n}",
+							"raw": "{\n  \"itens\": [\n    {\n      \"produtoId\": \"eb222a9d-e491-4f44-b9e7-a070ef7a4f12\"\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -473,7 +473,18 @@
 		},
 		{
 			"key": "pedidoId",
-			"value": "03412ed8-ed11-4f5d-b31b-b34dc281fecf"
+			"value": "03412ed8-ed11-4f5d-b31b-b34dc281fecf",
+			"disabled": true
+		},
+		{
+			"key": "pedido.valor",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "pedido.id",
+			"value": "03412ed8-ed11-4f5d-b31b-b34dc281fecf",
+			"type": "string"
 		}
 	]
 }
