@@ -23,7 +23,7 @@ namespace ControlePedido.Infra.Configuration
             }
             catch (Exception ex)
             {
-                var logger = services.GetRequiredService<ILogger>();
+                var logger = services.GetRequiredService<ILogger<ControlePedidoContext>>();
                 logger.LogError(ex, "Ocorreu um erro ao executar a migration do banco de dados!");
             }
         }
