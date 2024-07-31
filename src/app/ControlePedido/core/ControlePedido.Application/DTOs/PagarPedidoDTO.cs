@@ -9,13 +9,10 @@ namespace ControlePedido.Application.DTOs
         [JsonPropertyName("codigoTransacao")]
         public string CodigoTransacao { get; set; }
 
-        [JsonPropertyName("valorPago")]
-        public decimal ValorPago { get; set; }
 
-        public PagarPedidoDTO(string codigoTransacao, decimal valorPago)
+        public PagarPedidoDTO(string codigoTransacao)
         {
             CodigoTransacao = codigoTransacao;
-            ValorPago = valorPago;
         }
     }
 
@@ -25,9 +22,13 @@ namespace ControlePedido.Application.DTOs
         [JsonPropertyName("pedidoId")]
         public Guid PedidoId { get; set; }
 
-        public PagarPedidoManualDTO(Guid pedidoId, string codigoTransacao, decimal valorPago) : base(codigoTransacao, valorPago)
+        [JsonPropertyName("valorPago")]
+        public decimal ValorPago { get; set; }
+
+        public PagarPedidoManualDTO(Guid pedidoId, string codigoTransacao, decimal valorPago) : base(codigoTransacao)
         {
             PedidoId = pedidoId;
+            ValorPago = valorPago;
         }
     }
 }

@@ -69,7 +69,8 @@ namespace ControlePedido.Payment.Services
                 {
                     PedidoId = Guid.Parse(pagamento.PedidoId),
                     DataPagamento = pagamento.DataHoraPagamento,
-                    CodigoTransacao = pagamento.TransacaoId.ToString()
+                    CodigoTransacao = pagamento.TransacaoId.ToString(),
+                    ValorPago = pagamento.ValorPago
                 };
             }
             catch (ApiException apiEx)

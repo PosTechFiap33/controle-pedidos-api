@@ -43,10 +43,10 @@ Para instalar o projeto usando Helm, siga estes passos:
 Certifique-se de substituir "/Users/seu-usuario/banco-dados" pelo caminho real onde os arquivos do banco de dados estão armazenados isso é importante pois internamente é utilizado o volume com storage class do tipo local-storage.
 
 #### Integração com mercado pago: 
-Para que a integração com o mercado pago ocorra é necessário especificar o token de integração  em base64 e a url de webhook ao levantar a aplicação para isso execute o seguinte comando:
+Para que a integração com o mercado pago ocorra é necessário especificar o token de integração em base64, a url de webhook que será chamada pelo mercado pago, o userId correspondente a loja cadastrada e o externalPosId correspondente ao caixa cadastrado. Para isso execute o seguinte comando:
 
    ```bash
-   helm install controle-pedidos ./controlepedidos-chart --set database.deployment.volume.localPath="/Users/seu-usuario/banco-dados" --set mercadoPagoIntegration.token="Bearer TOKEN" --set mercadoPagoIntegration.urlWebhook="URL webhook"
+   helm install controle-pedidos ./controlepedidos-chart --set database.deployment.volume.localPath="/Users/seu-usuario/banco-dados" --set mercadoPagoIntegration.token="Bearer TOKEN" --set mercadoPagoIntegration.urlWebhook="URL webhook" --set userId="" --set externalPosId=""
    ```
 
 Caso o token seja de uma conta de teste é importante destacar que ele só funcionará de segunda a sexta, pois o mercado pago desliga os servidores de testes aos finais de semana.

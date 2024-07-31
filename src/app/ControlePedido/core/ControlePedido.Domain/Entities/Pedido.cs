@@ -61,7 +61,7 @@ namespace ControlePedido.Domain.Entities
         public Guid? ClienteId { get; private set; }
         public ICollection<PedidoItem> Itens { get; private set; }
         public ICollection<PedidoStatus> Status { get; private set; }
-        public PedidoPagamento Pagamento { get; private set; }
+        public PedidoPagamento? Pagamento { get; private set; }
         public Cliente? Cliente { get; private set; }
 
         protected Pedido() { }

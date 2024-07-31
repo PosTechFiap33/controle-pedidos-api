@@ -8,5 +8,6 @@ namespace ControlePedido.Domain.Adapters.DTOs
         public Guid PedidoId { get; set; }
         public DateTime DataPagamento { get; set; }
         public string CodigoTransacao { get; set; }
+        public decimal ValorPago { get; set; }
     }
 }
