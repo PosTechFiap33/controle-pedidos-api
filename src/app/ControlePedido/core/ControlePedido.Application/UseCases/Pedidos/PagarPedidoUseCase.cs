@@ -29,7 +29,7 @@ namespace ControlePedido.Application.UseCases.Pedidos
             if (pedido is null)
                 throw new DomainException("Não foi encontrado um pedido com o código informado!");
 
-            pedido.Pagar(pagarPedido.CodigoTransacao, pagamentoRealizado.DataPagamento, pagarPedido.ValorPago);
+            pedido.Pagar(pagarPedido.CodigoTransacao, pagamentoRealizado.DataPagamento, pagamentoRealizado.ValorPago);
 
             _repository.Atualizar(pedido);
 

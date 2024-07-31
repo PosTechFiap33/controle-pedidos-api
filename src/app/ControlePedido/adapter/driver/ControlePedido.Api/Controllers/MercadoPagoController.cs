@@ -29,7 +29,7 @@ public class MercadoPagoController : MainController
     [HttpPost()]
     public async Task<IActionResult> Pagamento([FromBody] PagamentoMercadoPagoDTO pagamento, [FromServices] IPagarPedidoUseCase useCase)
     {
-        await useCase.Executar(new PagarPedidoDTO(pagamento.Dados.TransacaoId, pagamento.Dados.Valor));
+        await useCase.Executar(new PagarPedidoDTO(pagamento.Dados.TransacaoId));
 
         return CustomResponse(null, HttpStatusCode.Created);
     }
