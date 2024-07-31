@@ -11,7 +11,7 @@ namespace ControlePedido.Api.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next, 
+        public ExceptionHandlingMiddleware(RequestDelegate next,
                                            ILogger<ExceptionHandlingMiddleware> logger)
         {
             _next = next;
@@ -36,7 +36,7 @@ namespace ControlePedido.Api.Middleware
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception, HttpStatusCode status = HttpStatusCode.InternalServerError)
         {
-            _logger.LogError(exception.Message, exception);
+            _logger.LogError(exception, "Ocorreu um erro ao processar a requisição: {Message}. StackTrace: {StackTrace}", exception.Message, exception.StackTrace);
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
