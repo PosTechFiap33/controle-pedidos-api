@@ -12,4 +12,7 @@ public class PagamentoRecebidoMercadoPagoDto
 
     [JsonPropertyName("date_approved")]
     public DateTime DataHoraPagamento { get; set; }
+
+    [JsonPropertyName("transaction_amount")]
+    public decimal ValorPago { get; set; }
 }
