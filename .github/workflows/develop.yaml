@@ -46,10 +46,3 @@ jobs:
     - name: Push Docker image to Docker Hub
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPONAME }}:dev
 
-    - name: pull-request
-      uses: repo-sync/pull-request@v2
-      with:
-        destination_branch: "main"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        pr_label: "feature, pr automatizada"
-        pr_title: "PR criada automaticamente"

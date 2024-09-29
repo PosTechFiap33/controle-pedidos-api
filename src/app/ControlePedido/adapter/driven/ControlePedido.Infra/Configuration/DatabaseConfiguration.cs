@@ -9,7 +9,8 @@ namespace ControlePedido.Infra.Configuration
     {
         public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration["DbConnection"];
+            var connectionEnv = "DbConnection";
+            var connectionString = Environment.GetEnvironmentVariable(connectionEnv) ?? configuration[connectionEnv];
             services.AddDbContext<ControlePedidoContext>(options => options.UseNpgsql(connectionString));
             return services;
         }
